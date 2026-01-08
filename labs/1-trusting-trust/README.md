@@ -8,7 +8,7 @@
 ### Clarifications for today
 
 Note:
-  - For quine-gen.c --- you can just statically allocate a large buffer.
+  - Step 1: For `quine-gen.c` --- you can just statically allocate a large buffer.
     We're just trying to build a quick and dirty solution to understand
     the paper, not write robust code.
 
@@ -16,6 +16,12 @@ Note:
     reading in a file using `fopen` etc and printing it out.  The
     replication should be contained entirely within the program ---
     though you can `#include` code statically if you want.
+
+  - Step 3: If you're on a Mac: the `diff` check in step 3's `Makefile`
+    will likely fail.  The MacOS compiler appears to put timestamps in
+    the binary.  Result: if you compile the identical file twice, the
+    two produced binaries will not match.   Hack solution: remove the
+    `diff` check.  (Better: disable this behavior!)
 
 ------------------------------------------------------------------------
 
@@ -67,7 +73,9 @@ the first line of code, realize you actually don't know what to type at
 all, and the apparent understanding was fake.  Fortunately, the brute
 force solution is easy: just keep writing the code, and when you're
 done, you'll understand much more deeply in a way that cannot be faked.
-(Hence this class.)
+  - (If there is  golden algorithm of this class it is this one: To
+    understand, build.  And our golden theorem: if you didn't build, you
+    didn't understand.)
 
 For this lab you will write code to implement Thompson's hack in three
 steps: start with `code/step1` (easy), then `code/step2` (medium), 
@@ -99,20 +107,29 @@ Hard check-off (if you're exceptionally ambitious):
     NOTE: in general for any lab you can always ignore our code and just
     implement your own from scratch as long as the provided tests pass.
     This will count as an extension (either major or minor depending on
-    the lab).
+    the lab).  In honor of Daniel Rebelsky ('22, TA '23) we call this
+    method "Daniel model" --- all labs can be done in Daniel mode, since
+    that was his preferred method :).  Just make sure the tests pass.
+    FWIW: We've never had anyone do this a few times and not get an A+ in 
+    class.
 
 Extensions:
-  - Do a version that uses `putchar` versus `printf`.
-  - Redo everything in a different language (e.g., rust).
+  - A favorite: Redo everything in a different language (e.g., rust).
   - Inject attacks into a binary program rather than source code.
   - Attack a different program (this could be a minor or major extension
     depending.)
+  - Take Ken's challenge and do it in the fewest characters as possible.
+    The more you cut the code down in size, the more you'll learn.
   - Some other neat trick in the spirit of the paper!  We'll add your
     hack for subsequent class years.
+  - Make the attacks more realistic.
 
 -------------------------------------------------------------------
 ### Intuition: self-replicating attack injection
 
+<p align="center">
+  <img src="docs/more-recursion.jpg" width="450" />
+</p>
 
 What is interesting about his hack:
 
@@ -124,7 +141,7 @@ What is interesting about his hack:
     attack subtle is that it was self-replicating:
 
   - You also couldn't see the attack by inspecting the `cc` compiler's
-    source because the attack was not in there either.  
+    source because the attack was not in there either. 
 
     The attack lived only in the shipped compiler binary, which detected
     when it was compiling the clean, non-hacked compiler source code
@@ -141,6 +158,10 @@ we have three single-file programs:
     It can compile itself:
     
             # generate a new compiler binary
+            % compiler compiler.c -o compiler
+            # still works
+            % compiler compiler.c -o compiler
+            # still working
             % compiler compiler.c -o compiler
 
   - `login.c`: the clean unhacked login program.   When run
@@ -166,7 +187,7 @@ we have three single-file programs:
     Because `trojan-compiler` automatically injects the backdoor into
     `login.c` during compilation, it is impossible to inspect `login.c`
     to see the attack.  (Note: we assume `login` is for local rather
-    than remote access so that the transcripts are easier.)
+    than remote access so that the transcripts are easier.)  
 
     This is cool, but not that tricky to follow.  The big leap that
     requires some thought is that Ken's `trojan-compiler.c` contains
@@ -207,8 +228,11 @@ we have three single-file programs:
     with the hack and recompile `compiler.c` with its flawed binary over
     and over and have all the evil self-replicate:
 
+            # <compiler> will now inject the attack
             % trojan-compiler compiler.c -o compiler
+            # don't need trojan anymore!
             % rm trojan-compiler trojan-compiler.c
+            # test it
             % compiler compiler.c -o compiler
             % compiler compiler.c -o compiler
             % compiler compiler.c -o compiler
@@ -232,8 +256,20 @@ we have three single-file programs:
 
     This is a weird result that should seem to flirt with the impossible.
 
+
+The maximum learning way to do the lab is to (1) stop reading now
+and (2) just implement Ken's hack.  However, as valuable as that is
+(I guarantee you won't regret it) doing so can take awhile, so in the
+interests of time we'll break the problem down into three steps, given
+in the following three sections.  Note: the jump from step 2 to step 3 is
+much bigger than what you need to do just for step 1 and step 2.  It may
+make sense to re-read your step 1 and step 2 code after you finish to
+make sure you really understand what is going on since you'll need their
+concepts for step 3.  If you get stuck for awhile that is fine (I did
+too!) --- this is a slippery concept.  Valuable though.  So here we are.
+
 -----------------------------------------------------------------------
-### step1: write a self-reproducing program generator
+### Step 1: write a self-reproducing program generator
 
 To get started, we'll first finish implementing the self-reproducing
 program (a [quine](https://en.wikipedia.org/wiki/Quine_(computing)))
@@ -313,8 +349,10 @@ Notes:
      you automatically emitted the code rather than typed it, the rules
      are the same: treat the code as if you wrote it.
 
+  3. If the code doesn't work: look at why --- this is all your code.
+
 --------------------------------------------------------------------------
-### step2: inject attacks into `step2/login` and `step2/compiler`
+### Step 2: inject attacks into `step2/login` and `step2/compiler`
 
 In this second step we're going to inject trivial attacks into the
 provided `step2/login.c` and `step2/compiler.c` programs in the obvious
@@ -437,8 +475,7 @@ Cool!  These two are the easier steps just to make sure you can attack
 the programs you want.  
 
 --------------------------------------------------------------------------
-### step3: inject an attack that will inject an attack into the compiler.
-
+### Step 3: inject an attack that will inject an attack into the compiler.
 
 Clearly we have to develop the compiler injection "attack" further since
 it only prints an annoying message rather than doing something evil.
@@ -486,8 +523,8 @@ problem by injecting a self-replicating copy of the entire attack into
 This may or may not help, but:
 
   - In a sense you can see step 2 as implementing an `attack.c`
-    that is roughly the source code difference between `compiler.c`
-    and `trojan-compiler.c`, and this step (3) turns the attack into
+    that is roughly the source code difference between `compiler.c` and
+    `trojan-compiler.c`, and this step (step 3) turns the attack into
     `attack-quine.c`
 
 We give some hints below, but you're more than welcome to do this
@@ -504,12 +541,12 @@ compiler is the same:
     # 2. compile compiler.c with the attacked copy
     % ./attacked-compiler.0 ../step2/compiler.c -o attacked-compiler.1
 
-    # 3. make sure they are the same! (Though see note below)
+    # 3. make sure they are the same! (MacOS users: see note
+    # below.)
     % diff attacked-compiler.0 attacked-compiler.1
 
     # yea!  at this point we will automatically regenerate our attack
     # whenever someone compiles the system compiler.
-
 
     # make sure login has the attack.
     % ./attacked-compiler.1 ../step2/login.c -o login-attacked
@@ -519,8 +556,8 @@ compiler is the same:
     
     # success!
 
-Note, taking a `diff` of the binaries in step 3 above is too strong
-a check since it assumes the same input to gcc gives the same output
+Note, taking a `diff` of the binaries in step 3 above can be too-strong
+a check since it assumes the same input to gcc produces the same output
 (e.g., no embedded time stamps etc).  If it succeeds we know we have
 the same result, but if it fails it doesn't mean we have a problem ---
 the real test is the login.  (I.e., equal binaries is a sufficient but
@@ -531,21 +568,24 @@ not necessary condition.)
 The basic idea is to take your attack and create a self-replicating version
 using the code in `step1`:
   1. You'll have to generate an array of ASCII values of your attack code
-     as in `step1`.
+     as in Step 1.
   2. You'll have to modify your attack on the compiler to inject both this
      array and a printed version of it (i.e., the code) into the compiler
      you are attacking.  This is why we looked at self-replicated programs.
 
 Overall this doesn't take much code.  You don't have to do things this
-way but: In order to make it easy to regenerate the attack as I changed
-it, I used an include to pull in the generated sort-of quine code:
+way but: In order to make it easy to regenerate the attack code as I
+experimented with it, I used an `#include` to pull in the generated
+sort-of quine code into the C code automatically (rather than use manual
+cut-and-paste):
 
-  1. Seperate out your attack into its own file (e.g., `attack.c`).
+  1. Seperate out your attack into its own file (e.g., `attack-seed.c`).
   2. Use `step1/gen-quine` to produce a file `attack.c` that has
      the array and the source code for the attack.
-  3. Include the attack file into `trojan-compile2.c`: note, this `#include`
-     will be in the middle of your `compile` routine, not at the 
-     top of the file (where it wouldn't do anything).  E.g., something like:
+  3. Include the attack file `attack.c` into `trojan-compile2.c`: note,
+     this `#include` will be in the middle of your `compile` routine,
+     not at the top of the file (where it wouldn't do anything).  E.g.,
+     something like:
 
 
             static void compile(char *program, char *outname) {
@@ -574,6 +614,8 @@ Note:
     be failing because there is non-determinism in compilation on MacOS
     M1's laptops.)
 
+
+ 
 -----------------------------------------------------------------------
 #### A topical modern example
 
@@ -586,6 +628,39 @@ or discusses how to prevent the GPT from being evil.
 </p>
 
 -----------------------------------------------------------------------
+#### The mysterious "Air Force Document"
+
+Fair play to Claude who was able to search better than I was able
+to Google and found the document Thompson couldn't find (cached:
+[docs/karg74.pdf](docs/karg74.pdf):
+
+> **Finding Thompson's "Unknown Air Force Document"**
+>
+> The document is **Karger, P.A. and Schell, R.R., "Multics Security Evaluation: Vulnerability Analysis," 
+> ESD-TR-74-193, Vol. II, June 1974, HQ Electronic Systems Division (AFSC), Hanscom AFB, MA. NTIS AD-A001 120/5.**
+>
+> The specific Trojan horse discussion Thompson referenced is in Section 3.4.5 "Trap Door Insertion" (pp. 50-55). 
+> Section 3.4.5.1 "Classes of Trap Doors" describes the compiler Trojan horse attack that Thompson later made 
+> famous—how malicious code could be hidden in the compiler binary itself, the same self-reproducing backdoor 
+> concept demonstrated in "Reflections on Trusting Trust."
+>
+> What's striking is that Karger and Schell essentially laid out the entire "trusting trust" attack a decade 
+> before Thompson's famous lecture, buried in a classified Air Force penetration test report. They even planted 
+> an actual trap door in `emergency_shutdown.link` during their exercises at MIT and RADC.
+>
+> The report is available at:
+> - https://csrc.nist.gov/files/pubs/conference/1998/10/08/proceedings-of-the-21st-nissc-1998/final/docs/early-cs-papers/karg74.pdf
+>
+> **Historical context:** This is from "Project ZARF," the Air Force tiger team that penetrated Multics at MIT 
+> and RADC. The authors—Paul Karger (then 2Lt USAF) and Roger Schell (then Major USAF)—later became foundational 
+> figures in computer security. Schell helped establish the "Orange Book" criteria, and Karger worked on the 
+> VAX VMM security kernel at DEC.
+>
+> Thompson apparently knew the concept from this report but couldn't locate the exact citation when writing his 
+> 1984 lecture—the Karger/Schell paper was a restricted military technical report not widely circulated in 
+> academic circles at the time.
+
+-----------------------------------------------------------------------
 #### Postscript
 
 You have now replicated Thompon's hack.  Startlingly, there seem to be
@@ -596,4 +671,3 @@ You can probably really stand out at parties by explaining what you did.
 <p align="center">
   <img src="docs/observe.jpg" width="450" />
 </p>
-
