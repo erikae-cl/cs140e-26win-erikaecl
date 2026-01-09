@@ -1,7 +1,7 @@
 ## CS140E: embedded operating systems (Engler, Winter, 2026)
 
 <p align="center">
-  <img src="labs/lab-memes/pi-intro.jpg" width="600" />
+  <img src="labs/lab-memes/2026-140e.jpg" width="600" />
 </p>
 
 Tl;dr:
