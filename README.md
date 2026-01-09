@@ -8,7 +8,6 @@
 Tl;dr:
   - 140E is a lab class, so [jump right to the labs](./labs/README.md).
 
-
 CS140E is an introductory operating systems course.  This course differs
 from most OS courses in that it uses real hardware instead of a fake
 simulator, and almost all of the code will be written by you.
@@ -157,7 +156,6 @@ First things first:
 [2020]: https://github.com/dddrrreee/cs140e-20win
 [2019]: https://github.com/dddrrreee/cs140e-win19
 [2018]: https://cs140e.sergio.bz
-
 
 <p align="center">
   <img src="labs/lab-memes/beast-mode.jpg" width="600" />
