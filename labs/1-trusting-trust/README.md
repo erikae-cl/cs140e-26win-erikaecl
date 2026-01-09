@@ -123,8 +123,8 @@ Extensions:
   - Some other neat trick in the spirit of the paper!  We'll add your
     hack for subsequent class years.
   - Make the attacks more realistic.
-  - A cool one from 2025 by Tianle Yu is to hack the tcc ("tiny compiler") to
-    insert the hack.
+  - A very cool one by Tianle Yu (2025): put the attack for real in the tcc 
+    "tiny C compiler". 
 
 -------------------------------------------------------------------
 ### Intuition: self-replicating attack injection
