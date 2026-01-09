@@ -36,8 +36,8 @@ contexts.  For what it is worth, everything you build will be stuff we
 found personally useful.   There will be zero (intentional) busy-work.
 
 If you're debating taking the class:
- - Here is [last year's class for reference][2025] ([the wrap-up summary][2025-summary] should be especially useful.)
- - And a short guide on [Should I take CS 140E?](guides/why-140e.md)
+ - Here is [last year's class for reference][2025] 
+ - [The wrap-up summary][2025-summary] should be especially useful.
 
 We have an unusually strong and varied staff this year.  Should be a
 fun quarter :)
@@ -51,8 +51,6 @@ fun quarter :)
   - James Yu-tang Chen + Sai Ketan Konkimalla (the DOOM! guys)
   - Ron Dubinsky  (Paxos+networking)
   - Stuart Sul (ELF, real world, and top-tier AI)
-
-
 
 <p align="center">
   <img src="labs/lab-memes/feynman-simple.jpg" width="400" />
@@ -92,12 +90,6 @@ requirement.
 
    3. It's also super fun.   The code you'll write can be used to
       as a basis for building many interesting systems.
-
-      As one measure: Last year, I taught two extra follow-on classes
-      (cs240lx and cs340lx) "for free" because of all the interesting
-      things that came up from cs140e.   In addition, it's caused me
-      to write more code than I have since grad school.  At my age,
-      that's an unusual result :)
 
 With that said, I set aside the entire quarter to work on this course,
 so am happy to help people that need it --- some of the biggest success
