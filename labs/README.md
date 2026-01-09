@@ -18,7 +18,6 @@ a hardware investment.
 
   - [0-intro](0-intro): the intro (non-lab) lecture.
 
-====>
 
   - [1-trusting-trust](1-trusting-trust): Ken Thompson is
     our patron saint of operating systems --- brilliant, with a gift
@@ -35,6 +34,8 @@ r/pi and using modern techniques to validate it.  Doing so will remove
 magic from what is going on since all of the interesting code on both
 the pi and Unix side will be written by you:
 
+
+====>
 
   - 2-gpio:  Two parts.  First, we will give out the
     hardware and make sure it works: [0-pi-setup](0-pi-setup/README.md).
