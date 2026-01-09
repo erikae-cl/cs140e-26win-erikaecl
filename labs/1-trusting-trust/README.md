@@ -88,7 +88,8 @@ then `code/step3` (hardest).
 #### Checkoff
 
 Standard check-off:
-  - When you type `make check` in `code/step3` the test passes.
+  - When you type `make check` in `code/step3` the test passes. (Note:
+    for MacOS: might have to remove the `diff` check as noted above.)
 
     NOTE: the most common mistake on this lab: making code much more
     complicated by implementing the attacks by buffering and manipulating
