@@ -210,7 +210,14 @@ pi-install code/3-loopback.bin
 The rpi has an on-board LED controlled by GPIO pin 47.  It is "active low"
 in that when you set pin(47)=1, it turns off, when pin(47)=0, it turns
 on.  The ACT led is useful as a status indicator since it's built-in.
-It's also useful as a check that you can access higher GPIO bank.
+It's also useful as a check that you can access higher GPIO bank.  
+
+Note: it's very small, and right below the Parthiv LED:
+<p float="center">
+  <img src="images/part3-act-on.jpg" width="250" />
+</p>
+
+**What to do**:
  1. Create a new file `4-act-blink.c`
  2. Write a program to that blinks the ACT led the same as `1-blink.c`
  3. Modify the Makefile so it compiles. 
