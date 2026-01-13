@@ -82,7 +82,6 @@ needed:
   - **SAFETY**: since these are farm-fresh LEDs from overseas don't
     put your eye right next to them in case they were made by maniacs
     and explode.
-
 2. **LED doesn't light?**
    - Reverse the LED (longer leg = power, shorter = ground)
    - Try partner's working LED on your pi
@@ -96,7 +95,6 @@ needed:
 - Red = power (3.3V)
 - Black = ground
 - Colors don't affect electricity, but make debugging much easier
-
 
 ### Setup Notes
 
