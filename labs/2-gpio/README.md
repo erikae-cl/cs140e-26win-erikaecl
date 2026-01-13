@@ -88,15 +88,10 @@ needed:
    - Try your LED on partner's pi
    - Try different LED
    - If still broken → ask staff
-
-### Wiring Guidelines
-
-**Wire colors** (strongly recommended):
-- Red = power (3.3V)
-- Black = ground
-- Colors don't affect electricity, but make debugging much easier
-
-### Setup Notes
+3.  **Wire colors** (strongly recommended):
+   - Red = power (3.3V)
+   - Black = ground
+   - Colors don't affect electricity, but make debugging much easier
 
 **Power cycling**: For today only, you must power-cycle the pi (push the
 metal Parthiv-board button or unplug the USB cable) after each test.
