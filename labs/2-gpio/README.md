@@ -181,7 +181,7 @@ you can buy on eBay, Adafruit, Sparkfun, Alibaba, etc.
 - Must mask out other pins' values
 - Verify using bitwise operations
 
-### Hardware Setup - Loopback Test
+#### Hardware Setup - Loopback Test
 
 We'll test input without external devices using a "loopback jumper" 
 (common trick):
@@ -205,26 +205,27 @@ pi-install code/3-loopback.bin
 --------------------------------------------------------------------
 ## Part 3: write your own tests.
 
-1. **act led***
+#### write `4-act-blink.c`
 
-The rpi has an on-board LED accessed by setting GPIO pin 47.  It's
-useful as a status indicator since it's built-in.  It's also useful
-as a check that you can access higher GPIO bank.
- 1. Write a program that will blink the act led.
- 2. Modify the Makefile so it compiles. 
-    understand.
- 3. Compile and run it!
+The rpi has an on-board LED controlled by GPIO pin 47.  It is "active low"
+in that when you set pin(47)=1, it turns off, when pin(47)=0, it turns
+on.  The ACT led is useful as a status indicator since it's built-in.
+It's also useful as a check that you can access higher GPIO bank.
+ 1. Create a new file `4-act-blink.c`
+ 2. Write a program to that blink the ACT led the same as `1-blink.c`
+ 3. Modify the Makefile so it compiles. 
+ 4. Compile and run it!
 
-2. **Complete test***
+
+#### write `5-all.c`
 
 As the final test:
- 1. Write another test that blinks all three LEDs at the same time. 
-    This makes it easy to see that everything is working.
- 2. You'll have to modify the Makefile again to add the new test.
- 3. Compile and run it!
+ 1. Write another test `5-all.c` that blinks all three LEDs
+    at the same time in unison (all on, all off).  This makes it easy
+    to see that everything is working.
+ 2. Modify the `Makefile`, compile, run as above.
 
-Congratulations!  At this point you can checkoff.
-
+Congratulations!  At this point you can check-off.
 
 --------------------------------------------------------------------
 ## Extensions
