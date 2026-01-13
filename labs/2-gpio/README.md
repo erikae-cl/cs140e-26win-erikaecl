@@ -22,7 +22,8 @@ This is our first "hello world" example: short, but representative.
 - [GPIO notes](../../notes/devices/GPIO.md) - How GPIO works.
 - [DEVICE notes](../../notes/devices/DEVICES.md) - Common device hardware patterns.
 
-### Read the `code/` (10 minutes)
+
+#### Read the `code/` (10 minutes)
 
 **Goal**: Understand there's no hidden magic in the system.
 
@@ -34,7 +35,7 @@ write in Lab 6). Look through:
    - Memory layout: the code addresses come from `memmap`
      and correspond to the address in `config.txt`.
 
-### Checkoff
+#### Checkoff
 
 No autograder today: demo working tests to TA.  
 We will check: 
