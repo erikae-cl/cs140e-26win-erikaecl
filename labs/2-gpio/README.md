@@ -147,8 +147,8 @@ pi-install code/2-blink.bin
 ```
 
 <p float="left">
-  <img src="images/part1-succ-green.jpg" width="450" />
-  <img src="images/part1-succ-blue.jpg" width="450" />
+  <img src="images/part1-succ-green.jpg" width="350" />
+  <img src="images/part1-succ-blue.jpg" width="350" />
 </p>
 
 #### Troubleshooting

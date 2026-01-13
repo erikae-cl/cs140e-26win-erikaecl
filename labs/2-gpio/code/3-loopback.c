@@ -42,7 +42,7 @@ void notmain(void) {
     // initial = off.
     unsigned v = 0; 
 
-    for(int i = 0; i < 20; i++) {
+    while(1) {
         // 1. set pin(<led0>) = <v> so we have something 
         //    to compare to.
         gpio_write(led0, v);
