@@ -198,8 +198,8 @@ pi-install code/3-loopback.bin
 ```
 
 <p float="left">
-  <img src="images/loopback-on.jpg" width="450" />
-  <img src="images/loopback-off.jpg" width="450" />
+  <img src="images/part2-loop-on.jpg" width="450" />
+  <img src="images/part2-loop-off.jpg" width="450" />
 </p>
 
 --------------------------------------------------------------------
