@@ -21,9 +21,9 @@ This is our first "hello world" example: short, but representative.
 **Prerequisites**:
 - Read [PRELAB.md](PRELAB.md) before starting
 - Complete [Lab 0: Pi Setup](../0-pi-setup/README.md)
+- Slides (Lab cheat sheet): [slides/2-gpio-notes.pdf](./slides/2-gpio-notes.pdf)
 
 **Required readings**:
-- Slides (Lab cheat sheet): [slides/2-gpio-notes.pdf](./slides/2-gpio-notes.pdf)
 - Broadcom BCM2835 manual: [../../docs/BCM2835-ARM-Peripherals.annot.PDF](../../docs/BCM2835-ARM-Peripherals.annot.PDF) - you cannot do the lab without this. Defines device addresses, values, and rules.
 - [BCM2835 GPIO errata](https://elinux.org/BCM2835_datasheet_errata#p90) - Known BCM2835 bugs.
 - [GPIO notes](../../notes/devices/GPIO.md) - How GPIO works.
