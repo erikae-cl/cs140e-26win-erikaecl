@@ -107,10 +107,6 @@ metal Parthiv-board button or unplug the USB cable) after each test.
 - If bootloader errors occur, this is usually why.
 - (Fixed in later labs)
 
-**Mac users**: If `<string.h>` errors mention MacSDK, run `export CPATH=`
-in your shell and see if that fixes it. (If so: You can add to `~/.zshrc` 
-to make permanent.)
-
 --------------------------------------------------------------------
 ## Part 1: make GPIO output work  (`1-blink.bin`, `2-blink.bin`)
 
