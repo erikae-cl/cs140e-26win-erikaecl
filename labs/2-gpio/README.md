@@ -1,5 +1,11 @@
 ## Overview
 
+<p align="center">
+  <img src="images/rpi-mj.png" width="450" />
+</p>
+
+
+
 **Goal**: control the pins on the pi by writing your own bare-metal
 GPIO driver using the raw Broadcom BCM2835 datasheet. A cornerstone
 of this class is learning how to understand and act on datasheets.
