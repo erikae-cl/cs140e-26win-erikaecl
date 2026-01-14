@@ -245,15 +245,14 @@ extension is to use your GPIO code to print "hello world" from your pi
 to your laptop "bit-banging" (manually setting pins high and low at a
 semi-precise rate).
 
-The Unix-side bootloader `pi-install` sends and recieves bytes from the
+The Unix-side bootloader `pi-install` sends and receives bytes from the
 pi using a 8n1 UART protocol configured at 115,200 baud (115,200 bits
-per second).  It prints any bytes it recieves from the pi.  So if you
+per second).  It prints any bytes it receives from the pi.  So if you
 can bit-bang "hello world" correctly, it will print it (and anything
 else you send).
 
-The UART protocol is described in
-[UART](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter)
-the protocol to transmit a byte `B` at a baud rate B is pretty simple.
+The [wikipedia entry for the UART protocol](https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter) has a reasonable description of how
+transmit a byte `x` at a baud rate B.
 
 For a given baud rate compute how many micro-seconds `T` you write each bit.  
  - For example, for 115,200, this is: `(1000*1000)/115200 = 8.68`.  
@@ -271,6 +270,8 @@ To transmit:
   2. write each bit value in the given byte for T (starting at bit 0,
      bit 1, ...).
   3. write a 1 (stop) for at-least T.
+
+Cycle counter inline assembly if you need it:
 
 ```c
 // from ch3 of the arm1176.pdf manual in doc/
@@ -290,7 +291,6 @@ static inline uint32_t cycle_cnt_read(void) {
 ```
 
 There's a bunch of other extensions in [the extensions doc](EXTENSIONS.md).
-
 
 --------------------------------------------------------------------
 ## Additional information
