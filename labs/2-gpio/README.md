@@ -309,8 +309,10 @@ Given this, you can then:
      at 9600 baud (or even slower) so the timing is easy.  If you want
      to go crazy: (1) add more jumpers for higher bandwidth, (2) make
      your own custom protocol.  If you can get 2MB/sec I'll give you
-     each $100.  (For the first two teams.)
-
+     each $100.  (For the first two teams.)  **MAJOR HINT**: if you 
+     look at set and clear --- you can set 32-bits with a single store,
+     you don't have to do them one bit at a time.  This makes writing
+     bits across many jumpers O(1). 
 
 There's a bunch of other extensions in [the extensions doc](EXTENSIONS.md).
 
