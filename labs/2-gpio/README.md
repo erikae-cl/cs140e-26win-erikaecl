@@ -290,6 +290,7 @@ static inline uint32_t cycle_cnt_read(void) {
 }
 ```
 
+
 There's a bunch of other extensions in [the extensions doc](EXTENSIONS.md).
 
 --------------------------------------------------------------------
@@ -309,3 +310,33 @@ More links:
 <p align="center">
   <img src="images/led-breaker.jpg" width="450" />
 </p>
+
+
+--------------------------------------------------------------------
+## Some yapping
+
+Bigger picture: it's easy to not pay attention and view these GPIO pieces
+we built today as baby-stuff, only interesting for script-kiddies and
+Arduino forums.
+
+But, with the addition of accurate time (e.g., using a cycle counter),
+you have enough to make you own implementations of nearly arbitrary
+digital protocols, including the ones the pi has hardware for: SPI,
+UART, I2C (with some additions), or more general ones such as ws2812b
+addressable light arrays (useful if you want a free burning man ticket)
+or your own hyper-fast logic analyzer that can beat the speed of many
+commercial ones (at least circa a few years ago).
+
+A favorite thing about math classes back when I was a kid was that
+you'd have two pages of abstract algebra and then 10 pages of absolutely
+insane problems proving weird stuff about Abelian groups that, in fact,
+the 2 pages gave you enough machinery for.  So little starter code!
+So many tricks!
+
+This class is not at that level (though our TAs are), but this is one of
+those examples.  A big unlock as a software person is to realize that
+often all the complicated stuff going on in a piece of hardware or a
+hardware protocol just reduces down to combining 1 + 0 + time.
+
+If you think about this for a bit, you'll have much more power than a few
+hours ago.
