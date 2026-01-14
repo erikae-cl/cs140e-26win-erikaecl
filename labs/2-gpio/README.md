@@ -296,6 +296,16 @@ Given this, you can then:
      and other types.
   3. At that point you have enough to make your own logic analyzer,
      which can be fun.  (See 340lx's first lab from 2025 :). 
+  4. Or: you can send packets between you and your partner's pi ---
+     though you will have to write the receive logic.  **SAFETY**:
+     make sure you share ground between the pi's or you can fry stuff.
+
+     Easiest is to use some other pins (e.g., 20,21) so that the pi
+     can still print to your laptop for debugging.  Then bitbang UART
+     at 9600 baud (or even slower) so the timing is easy.  If you want
+     to go crazy: (1) add more jumpers for higher bandwidth, (2) make
+     your own custom protocol.  If you can get 2MB/sec I'll give you
+     each $100.  (For the first two teams.)
 
 
 There's a bunch of other extensions in [the extensions doc](EXTENSIONS.md).
