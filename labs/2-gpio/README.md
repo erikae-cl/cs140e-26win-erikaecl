@@ -290,6 +290,10 @@ static inline uint32_t cycle_cnt_read(void) {
 }
 ```
 
+NOTE:
+ - Make sure you don't use the mis-named `delay_cycles` that we gave you
+   for UART since that doesn't delay for a precise number of cycles at all.
+
 Given this, you can then:
   1. Make a `putk` that prints arbitrary strings.
   2. Then start making your own `printk` that prints integers (`%d`)
