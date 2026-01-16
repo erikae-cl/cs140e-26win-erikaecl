@@ -371,6 +371,32 @@ because it's privileged (and so errors can crash the machine) and,
 related, because its implementation is missing most of `printf`'s
 functionality.
 
+-------------------------------------------------------------------
+#### Step 3: extend `fake-pi.c` to handle the act led (pin 47).
+
+The pi has an led on its board (the "act" led) that you can control
+by writing GPIO pin 47.
+
+For `fake-pi.c`:
+  - You will have to extend `fake-pi.c` to have additional clear
+    (`gpio_clr1`), set (`gpio_set1`) and function select location
+    (`gpio_fsel4`).
+
+  - extend `fake-pi.c:GET32`: to handle reads of the new function select location.
+  - extend `fake-pi.c:PUT32`: to handle writes to the new clear and set locations.
+  - do not add calls to initialize the new variables in `notmain` using
+    random!  It will throw off the values.  You'll notice `gpio_fsel4_v` is
+    set to `~0`.
+
+For testing:
+  - Enable the act tests:
+
+```
+        # 1-fake-pi/tests/Makefile
+        TEST_SRC := $(wildcard ./act-*.c)
+```
+
+-------------------------------------------------------------------
 ## Final checkoff for part 1.
 
 Now that you're done, for checkoff:
@@ -389,7 +415,17 @@ Now that you're done, for checkoff:
      checksum should be `525118589`.
 
 
+---------------------------------------------------------------
 #### Part 2: Do similar tracing on the pi (`2-trace/`)
+
+***IF YOU SEE THIS DO A git pull***
+***IF YOU SEE THIS DO A git pull***
+***IF YOU SEE THIS DO A git pull***
+***IF YOU SEE THIS DO A git pull***
+***IF YOU SEE THIS DO A git pull***
+***IF YOU SEE THIS DO A git pull***
+
+
 
 ***Note: for the `prog-hardware-loopback.c` you'll need to run a jumper
 between pins 8 and 9 (it sets and reads).***  
