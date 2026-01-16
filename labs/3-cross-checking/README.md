@@ -1,3 +1,19 @@
+### Clarifications
+
+NOTE: 
+ - You must add additional addresses to `fake-pi.c`.  If you grep in
+   your `test/*.out` and see:
+```
+  act-set-output.out:fake-pi.c:GET32:204:PANIC:read of illegal address: 20200010
+  act-write.out:fake-pi.c:PUT32:176:PANIC:write to illegal address: 20200020
+```
+  This means it is not handling those addresses, so your checksum won't match.
+  
+  We'll add a few more tests like this.
+
+
+
+
 ### Lab: grade your own GPIO code by cross-checking
 
 **Goal:** Verify your `gpio.c` from Lab 2 is correct by comparing its
