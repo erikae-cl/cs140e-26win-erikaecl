@@ -2,6 +2,5 @@
 // should be easy to debug!
 #include "rpi.h"
 void notmain(void) {
-    output("about to read 20\n");
-    gpio_read(20);
+    output("about to read 20=%d\n", gpio_read(20));
 }

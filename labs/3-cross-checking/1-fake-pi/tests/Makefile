@@ -1,133 +1,87 @@
 ########################################################################
-# testing makefile.
-#  1. assign the tests to run in <TEST_SRC>.  e.g.:
-#      - run a single test <0-gpio-write-17.c>:
-#           TEST_SRC := 0-gpio-write-17.c
-#      - run all tests with 0-* prefix:
-#           TEST_SRC := $(wildcard ./[0]-*.c)
-#      see more below.
-#   
-#  2. test commands (see bottom of Makefile and <Makefile.test>
-#       - "make run" it will run all programs in <TEST_SRC>
-#       - "make emit" it emit .outs for all programs in <TEST_SRC>
-#       - "make check" it will check all programs in <TESTS_SRC> against their .out
-#       - "make cksum" it will compute checksums for all programs in <TEST_SRC>
-#       - "make checkoff" it will compute a checksum of checksums for <TEST_SRC>
+# Testing makefile for 1-fake-pi
 #
-# for test:
-#   - the number in front of the test is sort-of difficulty.
-#   - easiest are 0-*.c tests.  
-#   - next are (1-*.c), etc.
-
-# what to do:
-#   - test based on how easy it is to figure things out.
-#   - so first make sure a single easy test.  if you match your
-#     partner, do a few more.
-#   - then do all the 0-*.c tests.
-#   - then do all the 1-*.c tests.
-#   - etc.
+# Usage:
+#   - Uncomment TEST_SRC lines below to select which tests to run
+#   - make run       : run all tests in TEST_SRC
+#   - make emit      : generate .out files for all tests
+#   - make check     : check tests against their .out files
+#   - make cksum     : compute checksums
+#   - make checkoff  : generate checkoff checksum
 #
-# makefile variables are last writer wins, so you can work through the 
-# following, uncommenting as you get further and further:
-#
-# note: you can change these to do assign to TEST_SRC using
-# "+=" rather than ":=" if you want to be cumulative.
-# e.g.:
-#   TEST_SRC += $(wildcard ./[1]-*.c)
+# Test progression (uncomment as you go):
+#   1. Start with single easy test: 0-gpio-write-17.c
+#   2. All 0-*.c tests (easy)
+#   3. All 1-*.c tests (harder)
+#   4. act-*.c tests (need to add addresses to fake-pi.c)
 
-# 1. do a single 0-*.c test file since easy.
-TEST_SRC := 0-gpio-write-17.c
+# Select which tests to run (last writer wins)
+TEST_SRC += 0-gpio-write-17.c
+TEST_SRC := $(wildcard ./[0]-*.c)
+TEST_SRC += $(wildcard ./[1]-*.c)
+TEST_SRC += $(wildcard ./[2]-*.c) 
+TEST_SRC += $(wildcard ./act-*.c)
+TEST_SRC += $(wildcard ./prog-*.c) 
 
-# 2. do all the 0-* test files (uncomment)
-# TEST_SRC := $(wildcard ./[0]-*.c)
+# Checkoff uses all tests
+CHKOFF_SRC := $(wildcard ./[012]-*.c) $(wildcard ./prog-*.c) $(wildcard ./act-*.c)
+CHKOFF_OUT := $(CHKOFF_SRC:.c=.out)
 
-# 3. then do the 1-*.c tests (uncomment)
-# TEST_SRC := $(wildcard ./[1]-*.c)
+########################################################################
 
-# 4. do the act tests.  you'll have to add addresses
-# to fake-pi.c
-# TEST_SRC :=  $(wildcard ./act-*.c) 
-
-# 6. then do everything.
-# TEST_SRC := $(wildcard ./[0-5]-*.c) $(wildcard ./prog-*.c)  $(wildcard ./act-*.c) 
-
-# the source used by the checkoff command.
-CHKOFF_SRC := $(wildcard ./[0-5]-*.c)  \
-              $(wildcard ./prog-*.c)   \
-              $(wildcard ./act-*.c) 
-
-# all the .outs
-CHKOFF_OUT := $(patsubst %.c, %.out, $(CHKOFF_SRC))
-
-#######################################################################
-
-# so it doesn't make noise.
 MAKEFLAGS += --no-print-directory
 
-# fake libpi
 LIBPI_FAKE = ../libpi-fake.a
-
-CC=gcc
-TEST_OUT := $(TEST_SRC:.c=.out)
 FAKE_PROGS := $(TEST_SRC:.c=.fake)
 
-DEPS   := $(LIBPI_FAKE) 
+# Dependencies: Makefile changes should trigger rebuild
 DEPS := $(filter-out %.d, $(MAKEFILE_LIST))
 
-INC =  -I../  -I.
-INC +=  -I$(CS140E_2026_PATH)/libpi/include
-INC +=  -I$(CS140E_2026_PATH)/libpi/libc
+INC = -I../ -I. -I$(CS140E_2026_PATH)/libpi/include -I$(CS140E_2026_PATH)/libpi/libc
 CFLAGS = $(INC) -O -Wall -Wno-unused-function -Wno-unused-variable
-
-### configure checking
-#export BIN_SUFFIX
-#export PROLOGUE
-#BIN_SUFFIX=.fake
-#PROLOGUE = 0
-# MK_CHK := $(CS140E_2026_PATH)/libunix/mk/Makefile.check-v3
-
 
 MK_CHK := ./Makefile.test
 
-all: $(LIBPI_FAKE) $(FAKE_PROGS) #  run
+all: libpi-fake-check $(FAKE_PROGS)
 
-# force checking libpi-fake.a
-$(LIBPI_FAKE): FORCE
-	make -C ..  libpi-fake.a
-FORCE:;
+# Use separate PHONY target to check library without marking the 
+# library itself as PHONY. This ensures the sub-make always runs 
+# to check if rebuild is needed, but <.fake> programs only rebuild 
+# if the library file's timestamp actually changes
+.PHONY: libpi-fake-check
+libpi-fake-check:
+	@make -C .. libpi-fake.a
 
-%.fake: %.c  $(SRC) $(LIBPI_FAKE) $(DEPS)
-	$(CC) $(CFLAGS) $< $(SRC) -o $*.fake $(LIBPI_FAKE)
+%.fake: %.c $(LIBPI_FAKE) $(DEPS)
+	$(CC) $(CFLAGS) $< -o $@ $(LIBPI_FAKE)
 
-# i'm not sure this actually makes things better.
-emit: $(DEPS) $(FAKE_PROGS)
-	@make -f $(MK_CHK) emitall "TESTS=$(FAKE_PROGS)" 
-run: $(DEPS) $(FAKE_PROGS)
-	@make -f $(MK_CHK) runall "TESTS=$(FAKE_PROGS)" 
-check: $(DEPS) $(FAKE_PROGS)
+# Test commands
+emit: $(FAKE_PROGS)
+	@make -f $(MK_CHK) emitall "TESTS=$(FAKE_PROGS)"
+run: $(FAKE_PROGS)
+	@make -f $(MK_CHK) runall "TESTS=$(FAKE_PROGS)"
+check: $(FAKE_PROGS)
 	@make -f $(MK_CHK) checkall "TESTS=$(FAKE_PROGS)"
-cksum: $(DEPS) $(FAKE_PROGS)
-	@make -f $(MK_CHK) cksumall "TESTS=$(FAKE_PROGS)" 
-ref: $(DEPS) $(FAKE_PROGS)
-	@make -f $(MK_CHK) refall "TESTS=$(FAKE_PROGS)" 
+cksum: $(FAKE_PROGS)
+	@make -f $(MK_CHK) cksumall "TESTS=$(FAKE_PROGS)"
+ref: $(FAKE_PROGS)
+	@make -f $(MK_CHK) refall "TESTS=$(FAKE_PROGS)"
 
-print:
-	echo "$(TEST_OUT)"
-
-checkoff: #  $(DEPS) 
+# Generate checkoff checksum
+checkoff:
 	@make -C ./ emit
-	@echo "cksums of all files in (CHKOFF_OUT):";
+	@echo "--- Checksums of all output files ---"
 	@ls $(CHKOFF_OUT) | sort | xargs cksum
-	@echo -n "total files = ";
-	@ls $(CHKOFF_OUT) | wc  -l
-	@echo -n "USE THIS VALUE FOR CHECKOFF:\n";
-	@echo -n "  checksum of cksum command <ls <CHKOFF_SRC> | sort | xargs cksum  | cksum:\n"
-	@ls $(CHKOFF_OUT) | sort | xargs cksum  | cksum
+	@echo ""
+	@echo "Total files: $$(ls $(CHKOFF_OUT) | wc -l)"
+	@echo ""
+	@echo "=== USE THIS VALUE FOR CHECKOFF ==="
+	@ls $(CHKOFF_OUT) | sort | xargs cksum | cksum
 
 cleanall: clean
-	rm -f *.out  *.raw
+	rm -f *.out *.raw
 
 clean:
-	rm -rf *.fake *~ *.o Makefile.bak  
+	rm -f *.fake *~ *.o Makefile.bak
 
-.PHONY: all clean  cleanall emit run check cksum ref
+.PHONY: all clean cleanall emit run check cksum ref checkoff libpi-fake-check
