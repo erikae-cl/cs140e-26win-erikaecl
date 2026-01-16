@@ -271,18 +271,6 @@ void * custom_c_runtime_init(void);
 // make a symbol weak.
 #define WEAK(fn) __attribute__((weak)) fn
 
-
-
-// special panic for gpio.  Why: 
-//  - Our problem is if gpio is broken, output is pretty hard!  
-//  - Also, might be during boot.  
-//  - Also for next lab its useful to have a weird panic so we can test.
-// For today: we don't do anything besides inf loop (see panic:libpi.c).  
-// see: libpi.c
-void gpio_panic(const char *msg, ...);
-
-// macro hack
-#define gpio_assert(bool) do { if(!(bool)) panic(# bool); } while(0)
-#define gpio_panic(msg...) panic(msg)
+#include "gpio.h"
 
 #endif
