@@ -35,9 +35,8 @@ r/pi and using modern techniques to validate it.  Doing so will remove
 magic from what is going on since all of the interesting code on both
 the pi and Unix side will be written by you:
 
-====>
 
-  - 2-gpio:  Two parts.  First, we will give out the
+  - [2-gpio](2-gpio):  Two parts.  First, we will give out the
     hardware and make sure it works: [0-pi-setup](0-pi-setup/README.md).
 
     Second start getting used to understanding hardware datasheets by
@@ -45,7 +44,8 @@ the pi and Unix side will be written by you:
     Broadcom document GPIO description.  You will use this to implement
     your own blink and a simple network between your r/pi's.
 
-  - 3-cross-check: you will use read-write logging
+====>
+  - [3-cross-check](3-cross-check): you will use read-write logging
     of all loads and stores to device memory to verify that your GPIO
     code is equivalent to everyone else's.  If one person got the code
     right, everyone will have it right.

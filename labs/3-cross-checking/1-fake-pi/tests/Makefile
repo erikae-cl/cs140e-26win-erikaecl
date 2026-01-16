@@ -56,15 +56,15 @@ libpi-fake-check:
 	$(CC) $(CFLAGS) $< -o $@ $(LIBPI_FAKE)
 
 # Test commands
-emit: $(FAKE_PROGS)
+emit: libpi-fake-check $(FAKE_PROGS)
 	@make -f $(MK_CHK) emitall "TESTS=$(FAKE_PROGS)"
-run: $(FAKE_PROGS)
+run: libpi-fake-check $(FAKE_PROGS)
 	@make -f $(MK_CHK) runall "TESTS=$(FAKE_PROGS)"
-check: $(FAKE_PROGS)
+check: libpi-fake-check $(FAKE_PROGS)
 	@make -f $(MK_CHK) checkall "TESTS=$(FAKE_PROGS)"
-cksum: $(FAKE_PROGS)
+cksum: libpi-fake-check $(FAKE_PROGS)
 	@make -f $(MK_CHK) cksumall "TESTS=$(FAKE_PROGS)"
-ref: $(FAKE_PROGS)
+ref: libpi-fake-check $(FAKE_PROGS)
 	@make -f $(MK_CHK) refall "TESTS=$(FAKE_PROGS)"
 
 # Generate checkoff checksum
