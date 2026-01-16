@@ -1,10 +1,23 @@
-### Clarifications
 
-NOTE: 
-  - We pushed the 5 tests.  Before doing anything:
+### Errata
+
+We pushed the 5 tests.  Unfortunately you have to make 3 fixes:
 
 
-    You'll need to make TWO changes to add them to your `1-fake-pi/tests/Makefile`:
+Before doing anything:
+
+  1. Change your `gpio_set_function` so you have exactly the same panic as we do:
+     (And make sure you use the same pin panic string for the rest of gpio.c):
+   
+```
+    void gpio_set_function(unsigned pin, gpio_func_t func) {
+        if(pin > GPIO_MAX_PIN)
+            gpio_panic("illegal pin=%d\n", pin);
+        if((func & 0b111) != func)
+            gpio_panic("illegal func=%x\n", func);
+    ```
+
+ 2.  You'll need to make TWO changes to add them to your `1-fake-pi/tests/Makefile`:
 
 ```
         TEST_SRC += $(wildcard ./[2]-*.c)
@@ -20,6 +33,49 @@ NOTE:
         # add the 5 to check checkoff source
 ```
 
+  3. `make clean && make emit.`
+
+  4.  Our checkoff: 1969050300 1050
+
+
+```
+1180314136 109 ./0-gpio-read-17.out
+2641069390 135 ./0-gpio-read-20.out
+2088150141 135 ./0-gpio-read-21.out
+2820997970 135 ./0-gpio-read-7.out
+197440487 149 ./0-gpio-set-input-17.out
+2488920004 149 ./0-gpio-set-input-20.out
+4071544067 149 ./0-gpio-set-input-21.out
+233099041 149 ./0-gpio-set-input-7.out
+2970604951 143 ./0-gpio-write-17.out
+3157623788 145 ./0-gpio-write-21.out
+88434739 2289 ./1-gpio-read.out
+2830168373 5379 ./1-gpio-set-input.out
+107627159 107 ./1-gpio-set-off.out
+710888840 107 ./1-gpio-set-on.out
+53206415 149 ./1-gpio-set-output.out
+2984310116 2460 ./1-gpio-write.out
+1042851273 2667 ./2-set-input-N.out
+1931666800 1250 ./2-set-off-N.out
+2878429198 1250 ./2-set-on-N.out
+1973121055 2673 ./2-set-output.out
+3263639091 634 ./5-gpio-n-set-func.out
+688829614 149 ./5-gpio-set-func.out
+541045294 177625 ./5-set-function-N.out
+815968718 634 ./5-set-pin-func.out
+2608020824 149 ./act-set-output.out
+3166146642 141 ./act-write.out
+3264505994 1602 ./prog-1-blink.out
+2701669809 2464 ./prog-2-blink.out
+1856374239 5249 ./prog-3-input.out
+
+Total files: 29
+
+=== USE THIS VALUE FOR CHECKOFF ===
+1969050300 1050
+```
+
+### Clarifications
 
 
  - You must add additional addresses to `fake-pi.c`.  If you grep in
