@@ -141,7 +141,7 @@ Success looks like:
 ```
 total files = 29
 USE THIS VALUE FOR CHECKOFF:
-525118589 1049
+[XXX check back on this] 1049
 ```
 
 **Quick debug tip:**
