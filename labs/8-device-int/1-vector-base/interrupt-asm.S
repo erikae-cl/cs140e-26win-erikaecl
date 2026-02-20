@@ -94,12 +94,13 @@ _interrupt_vector_slow:
 @ TODO: change the SWI call to do a relative branch <b> 
 @ to sys_plus1_handler --- can do this since we don't have 
 @ to copy the vector anywhere.
+@ ldr pc, =unhandled_swi
 .align 5
 .globl _interrupt_vector_fast
 _interrupt_vector_fast:
   ldr pc, =unhandled_reset
   ldr pc, =unhandled_undefined_instruction
-  ldr pc, =unhandled_swi
+  b sys_plus1_handler
   ldr pc, =unhandled_prefetch_abort
   ldr pc, =unhandled_data_abort
   ldr pc, =unhandled_interrupt

@@ -3,10 +3,11 @@
 # swap these two to use your code.
 # COMMON_SRC := ../2-gpio-int/gpio-int.c
 STAFF_OBJS += $(CS140E_2026_PATH)/libpi/staff-objs/gpio-int.o
-
+COMMON_SRC := $(CS140E_2026_PATH)/libpi/objs/uart.o
 # swap these two to use your code 
-# COMMON_SRC := test-interrupts.c
-STAFF_OBJS += staff-test-interrupts.o
+COMMON_SRC := test-interrupts.c
+COMMON_SRC += uart_interrupts.c
+#STAFF_OBJS += staff-test-interrupts.o
 
 ########################################################
 # tests: 3-* hardest, 2-* easier, 1-* easier.  
@@ -33,10 +34,14 @@ STAFF_OBJS += staff-test-interrupts.o
 # PROGS += 1-timer.c
 
 # simplest: make sure that loopback works.
-PROGS += 0-check-connect.c
+#PROGS += 0-check-connect.c
+
+
+PROGS += 4-uart-interrupts.c
+PROGS += 4-uart-drain.c
 
 # run everything
-PROGS = $(wildcard [0123]-*.c)
+#PROGS = $(wildcard [0123]-*.c)
 
 # given
 COMMON_SRC += interrupt-asm.S 

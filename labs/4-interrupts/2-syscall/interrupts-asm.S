@@ -20,6 +20,7 @@ _interrupt_table:
   ldr pc, _data_abort_asm
   ldr pc, _reset_asm
   ldr pc, _interrupt_asm
+
 fast_interrupt_asm:
   sub   lr, lr, #4 @First instr of FIQ handler
   push  {lr}
@@ -36,6 +37,50 @@ _prefetch_abort_asm:          .word prefetch_abort_asm
 _data_abort_asm:              .word data_abort_asm
 _interrupt_asm:               .word interrupt_asm
 _interrupt_table_end:   @ end of the table.
+
+
+.globl user_interrupt_table
+.globl user_interrupt_table_end
+user_interrupt_table:
+  @ Q: why can we copy these ldr jumps and have
+  @ them work the same?
+  ldr pc, _reset_asm
+  ldr pc, _undefined_instruction_asm
+  ldr pc, _user_software_interrupt_asm
+  ldr pc, _prefetch_abort_asm
+  ldr pc, _data_abort_asm
+  ldr pc, _reset_asm
+  ldr pc, _interrupt_asm
+
+
+_user_software_interrupt_asm:      .word user_software_interrupt_asm
+
+user_interrupt_table_end:   @ end of the table.
+
+
+user_software_interrupt_asm:
+
+    push  {r4-r12,lr}         @ XXX: pushing too many 
+                                @ registers: only need caller
+                                @ saved.
+    sub   lr, lr, #4
+    mov   r1, r0
+    mov   r0, lr              @ Pass old pc as arg 0
+    bl    syscall_vector    @ C function: expects C 
+                                @ calling conventions.
+
+    pop   {r4-r12,lr} 	    @ pop integer registers
+                                @ this MUST MATCH the push.
+                                @ very common mistake.
+
+    @ return from interrupt handler: will re-enable general ints.
+    @ Q: what happens if you do "mov" instead?
+    @ Q: what other instructions could we use?
+    
+    movs    pc, lr        @ 1: moves <spsr> into <cpsr> 
+                            @ 2. moves <lr> into the <pc> of that
+                            @    mode.
+
 
 @ only handler that should run since we 
 @ only enable general interrupts
@@ -87,8 +132,28 @@ software_interrupt_asm:
     @   6 restore regs: must be identical to what got pushed 
     @     at step (1)
     @   - return from the exception (look at interrupt_asm)
-    asm_not_implemented()
-    movs pc, lr
+
+    push  {r4-r12,lr}         @ XXX: pushing too many 
+                                @ registers: only need caller
+                                @ saved.
+    sub   lr, lr, #4
+    mov   r1, r0
+    mov   r0, lr              @ Pass old pc as arg 0
+    bl    syscall_vector    @ C function: expects C 
+                                @ calling conventions.
+
+    pop   {r4-r12,lr} 	    @ pop integer registers
+                                @ this MUST MATCH the push.
+                                @ very common mistake.
+
+    @ return from interrupt handler: will re-enable general ints.
+    @ Q: what happens if you do "mov" instead?
+    @ Q: what other instructions could we use?
+    
+    movs    pc, lr        @ 1: moves <spsr> into <cpsr> 
+                            @ 2. moves <lr> into the <pc> of that
+                            @    mode.
+
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ currently we don't use any of these, so just panic and

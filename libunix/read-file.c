@@ -27,5 +27,23 @@ void *read_file(unsigned *size, const char *name) {
     //    - fclose() the file descriptor
     //    - make sure any padding bytes have zeros.
     //    - return it.   
-    unimplemented();
+    
+    
+
+
+    int fd = open(name, O_RDONLY);
+    struct stat stats;
+
+    stat(name, &stats);
+    *size = stats.st_size;
+
+
+    char *buffer = calloc(*size + 4, 1);
+    if (*size == 0) {
+        return buffer;
+    }
+
+    read_exact(fd, buffer, *size);
+    close(fd);
+    return buffer;
 }

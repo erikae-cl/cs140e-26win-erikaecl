@@ -8,6 +8,7 @@
  */
 #include "rpi.h"
 #include "rpi-interrupts.h"
+#include "memmap.h"
 
 int syscall_hello(const char *msg);
 int syscall_illegal(void);
@@ -17,6 +18,7 @@ void interrupt_vector(unsigned pc) {
     panic("should not be called\n");
 }
 
+
 // pc should point to the system call instruction.
 //      can see the encoding on a3-29:  lower 24 bits hold the encoding.
 // r0 = the first argument passed to the system call.
@@ -24,7 +26,9 @@ int syscall_vector(unsigned pc, uint32_t r0) {
     uint32_t inst=0, sys_num=0;
 
     // figure out the instruction and the system call number.
-    unimplemented();
+    inst = __code_start__[((unsigned)pc - (unsigned)__code_start__) / 4];
+    sys_num = inst & 0xffffff;
+
     trace("inst=%b, sys_num=%d\n", inst, sys_num);
 
     switch(sys_num) {

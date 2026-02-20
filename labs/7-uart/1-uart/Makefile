@@ -3,7 +3,7 @@
 # MAKE SURE TO UNCOMMENT the line:
 # MAKE SURE TO UNCOMMENT the line:
 # MAKE SURE TO UNCOMMENT the line:
-#     COMMON_SRC += uart.c
+# COMMON_SRC += uart.c
 # so it will make your code!
 
 # do these in order.

@@ -1,0 +1,21 @@
+DEBUG:done with options: dev name=</dev/cu.usbserial-10>, pi-prog=<./1-many-fn-example-bug.bin>, trace=0
+opened tty port </dev/cu.usbserial-10>.
+DEBUG:my-install: tty-usb=</dev/cu.usbserial-10> program=<./1-many-fn-example-bug.bin>: about to boot
+TRACE:simple_boot: sending 14528 bytes, crc32=5dc224db
+BOOT:waiting for a start
+DEBUG:PRINT_STRING:pi sent print: <UART Clara Wang: success: Received the program!>
+BOOT:bootloader: Done.
+TRACE:PRE: about to single step <illegal>
+ENABLE
+TRACE:fault:	8188:	e92d4010  @ 1
+TRACE:fault:	818c:	e3a01001  @ 2
+TRACE:fault:	8190:	e59f3008  @ 3
+TRACE:fault:	8194:	e5930000  @ 4
+TRACE:fault:	8198:	ebffffa1  @ 5
+TRACE:fault:	8024:	e5801000  @ 6
+TRACE:fault:	8028:	e12fff1e  @ 7
+PANIC:1-many-fn-example-bug.c:single_step_handler:45:Wrote to illegal address
+
+DONE!!!
+
+bootloader: pi exited.  cleaning up

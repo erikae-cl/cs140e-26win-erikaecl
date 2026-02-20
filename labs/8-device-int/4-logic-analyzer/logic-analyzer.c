@@ -31,9 +31,29 @@ void interrupt_vector(unsigned pc) {
     //    easy way is to use a uint32_t array where the counter is volatile.
     unsigned s = cycle_cnt_read();
 
+    // dev_barrier();
     dev_barrier();
-    unimplemented();
+    cq_push32(&uartQ, s);
+    uint32_t val = 0b0;
+
+    if (!gpio_read(in_pin)) {
+        val = 0b1;
+    }
+    cq_push32(&uartQ, val);
+    gpio_event_clear(in_pin);
+    
     dev_barrier();
+
+
+
+    // if (gpio_read(in_pin) == 0) {
+    //     cq_push(&uartQ, 0b1);
+    // } else {
+    //     cq_push(&uartQ, 0b0);
+    // }
+
+    
+
 }
 
 void notmain() {

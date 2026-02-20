@@ -26,4 +26,7 @@ void timer_test_init(void);
 // compose rise and fall and timer.
 void rise_fall_timer_init(void) ;
 
+void uart_test_init(void);
+
+
 #endif

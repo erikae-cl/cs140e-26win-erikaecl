@@ -10,10 +10,11 @@ PROGS := tests/1-epsilon-should-fail-test.c
 PROGS := tests/2-increment-fail-test.c
 
 # everything [ignore 1]
-PROGS := $(wildcard tests/[023567]*-test.c)
+
+PROGS := $(wildcard tests/[02345]*-test.c)
 
 # simple vacuous test.
-PROGS := tests/0-epsilon-test.c
+# PROGS := tests/0-epsilon-test.c
 
 # all your code will be in here.
 COMMON_SRC += check-interleave.c   

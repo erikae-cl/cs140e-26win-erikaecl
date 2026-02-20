@@ -7,6 +7,7 @@
 //  - _int_table_user[], _int_table_user_end[] tables in interrupt-asm.S
 #include "rpi.h"
 #include "rpi-interrupts.h"
+#include "memmap.h"
 
 // in syscall-asm.S
 void run_user_code_asm(void (*fn)(void), void *stack);
@@ -16,10 +17,9 @@ void run_user_code_asm(void (*fn)(void), void *stack);
 void run_user_code(void (*user_fn)(void), void *stack) {
     assert(stack);
     demand((unsigned)stack % 8 == 0, stack must be 8 byte aligned);
-
+    // panic(" i reached run user code");
     // you have to implement <syscall-asm.S:run_user_code_asm>
     // will call <user_fn> with stack pointer <stack>
-    todo("make sure to finish the code in run_user_code_asm>");
     run_user_code_asm(user_fn, stack);
     not_reached();
 }
@@ -30,6 +30,12 @@ static inline uint32_t cpsr_get(void) {
     uint32_t cpsr;
     asm volatile("mrs %0,cpsr" : "=r"(cpsr));
     return cpsr;
+}
+
+static inline uint32_t spsr_get(void) {
+    uint32_t spsr;
+    asm volatile("mrs %0,spsr" : "=r"(spsr));
+    return spsr;
 }
 
 enum { N = 1024 * 64 };
@@ -43,7 +49,7 @@ static uint64_t stack[N];
 // routine.
 void user_fn(void) {
     uint64_t var;
-
+   
     // local variables should be within the start and end of the
     // <stack> we wanted to use.
     trace("checking that stack got switched\n");
@@ -52,8 +58,8 @@ void user_fn(void) {
 
     // use <cpsr_get()> above to get the current mode and check that its
     // at user level.
-    unsigned mode = 0;
-    todo("check that the current mode is USER_LEVEL");
+    unsigned mode = cpsr_get() & 0b11111;
+    // todo("check that the current mode is USER_LEVEL");
 
     if(mode != USER_MODE)
         panic("mode = %b: expected %b\n", mode, USER_MODE);
@@ -78,7 +84,12 @@ int syscall_vector(unsigned pc, uint32_t r0) {
 
     // make a spsr_get() using cpsr_get() as an example.
     // extract the mode bits and store in <mode>
-    todo("get <spsr> and check that mode bits = USER level\n");
+    // todo("get <spsr> and check that mode bits = USER level\n");
+    inst = __code_start__[((unsigned)pc - (unsigned)__code_start__) / 4];
+    sys_num = inst & 0xffffff;
+    
+    unsigned spsr = spsr_get();
+    mode = spsr & 0b11111;
 
     // do not change this code!
     if(mode != USER_MODE)
@@ -104,12 +115,17 @@ void notmain() {
     // define a new interrupt vector table, and pass it to 
     // rpi-interrupts.h:interrupt_init_v
     // NOTE: make sure you set the stack pointer.
-    todo("use rpi-interrupts.h:<interrupt_init_v> (in this dir) "
-         "to install a interrupt vector with a different swi handler");
+    // todo("use rpi-interrupts.h:<interrupt_init_v> (in this dir) "
+    //      "to install a interrupt vector with a different swi handler");
+
+    extern uint32_t user_interrupt_table[] ;
+    extern uint32_t user_interrupt_table_end[];
+    interrupt_init_v(user_interrupt_table, user_interrupt_table_end);
+
 
     // use the <stack> array above.  note: stack grows down.
-    todo("set <sp> to a reasonable stack address in <stack>");
-    uint64_t *sp = 0;
+    // todo("set <sp> to a reasonable stack address in <stack>");
+    uint64_t *sp = stack + N;
 
     output("calling user_fn with stack=%p\n", sp);
     run_user_code(user_fn, sp); 

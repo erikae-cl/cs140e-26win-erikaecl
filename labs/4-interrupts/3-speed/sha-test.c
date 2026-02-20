@@ -54,4 +54,5 @@ void notmain(void) {
     for(int i = 0; i < N; i++)
         sha_test(i,0);
     output("SUCCESS: %d sha's matched\n", N);
+
 }

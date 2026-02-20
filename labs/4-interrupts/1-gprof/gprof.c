@@ -7,6 +7,7 @@
  *	  its associated count
  */
 #include "rpi.h"
+#include <stdio.h>
 
 // pulled the interrupt code into these header files.
 #include "rpi-interrupts.h"
@@ -36,7 +37,11 @@ static volatile unsigned *hist = 0;
 // - allocate <hist> with <kmalloc> using <pc_min> and
 //   <pc_max> to compute code size.
 static unsigned gprof_init(void) {
-    todo("allocate <hist> using <kmalloc>.  initialize etc\n");
+    pc_max = (unsigned)__code_end__;
+    pc_min = (unsigned)__code_start__;
+    hist_n = (pc_max - pc_min) / 4;
+    hist = kmalloc(hist_n);
+    // todo("allocate <hist> using <kmalloc>.  initialize etc\n");
     return hist_n;
 }
 
@@ -44,8 +49,10 @@ static unsigned gprof_init(void) {
 //    few lines of code
 static void gprof_inc(unsigned pc) {
     assert(pc >= pc_min && pc <= pc_max);
-    todo("make sure you bounds check\n");
-    unimplemented();
+    // todo("make sure you bounds check\n");
+    // unimplemented();
+
+    hist[(pc - pc_min) / 4] += 1;
 }
 
 // print out all samples whose count > min_val
@@ -58,7 +65,18 @@ static void gprof_inc(unsigned pc) {
 //  - we expect pc's to be in GET32, PUT32, different
 //    uart routines, or rpi_wait.  (why?)
 static void gprof_dump(unsigned min_val) {
-    todo("make sure you don't trace this routine!\n");
+    unsigned prev = GET32(ARM_Timer_IRQ);
+    PUT32(ARM_Timer_IRQ_Clear, 1);
+    for (int i = 0; i < hist_n; i++) {
+        if (hist[i] > min_val) {
+            // printk("%d\n", i);
+            printk("Line #: %x with interrupt count %d\n", i * 4 + pc_min, hist[i]);
+            
+        }
+    }
+    PUT32(ARM_Timer_IRQ, prev);
+    // todo("make sure you don't trace this routine!\n");
+
 }
 
 /**************************************************************

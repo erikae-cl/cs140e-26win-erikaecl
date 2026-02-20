@@ -1,5 +1,8 @@
 PROGS += 0-nop1-example.c
 PROGS += 1-many-fn-example.c
+PROGS += 1-many-fn-example-hash.c
+PROGS += 1-many-fn-example-hist.c
+PROGS += 1-many-fn-example-bug.c
 
 L := $(CS140E_2026_PATH)/libpi/
 STAFF_OBJS += $(L)/staff-objs/staff-kmalloc.o

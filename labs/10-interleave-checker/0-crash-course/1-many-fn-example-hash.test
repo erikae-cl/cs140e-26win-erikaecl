@@ -1,0 +1,374 @@
+TRACE:******************<nop_1>******************************
+TRACE:	check the faulting pc's against <0-nop-example.list>:
+TRACE:	00008038 <nop_1>:
+TRACE:expected:	8038:   e320f000    nop {0}
+TRACE:expected:	803c:   e3a00002    mov r0, #2
+TRACE:expected:	8040:   ef000001    svc 0x00000001
+TRACE:PRE: about to single step <nop_1>
+TRACE:fault:	8038:	e320f000  @ 1
+TRACE:Register 14 changed to value 32840
+TRACE:Register 16 changed to value 272
+TRACE:Hash is now 0x47d439c1
+TRACE:fault:	803c:	e3a00002  @ 2
+TRACE:Hash is now 0x9e010dc6
+TRACE:fault:	8040:	ef000001  @ 3
+TRACE:Register 0 changed to value 2
+TRACE:Hash is now 0xd4c102b3
+TRACE:nop_1: exited with syscall=2: arg0=0, pc=0x8044
+TRACE:POST: done single-stepping nop_1
+TRACE:	n_inst=3: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8044
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:******************<nop_10>******************************
+TRACE:PRE: about to single step <nop_10>
+TRACE:fault:	8058:	e320f000  @ 4
+TRACE:Register 0 changed to value 0
+TRACE:Hash is now 0x5ed8ff57
+TRACE:fault:	805c:	e320f000  @ 5
+TRACE:Hash is now 0x7d59cd11
+TRACE:fault:	8060:	e320f000  @ 6
+TRACE:Hash is now 0x11d75301
+TRACE:fault:	8064:	e320f000  @ 7
+TRACE:Hash is now 0x5ecc36ca
+TRACE:fault:	8068:	e320f000  @ 8
+TRACE:Hash is now 0xef1a20ff
+TRACE:fault:	806c:	e320f000  @ 9
+TRACE:Hash is now 0xe8cb35c4
+TRACE:fault:	8070:	e320f000  @ 10
+TRACE:Hash is now 0x99fd612b
+TRACE:fault:	8074:	e320f000  @ 11
+TRACE:Hash is now 0xd38cf006
+TRACE:fault:	8078:	e320f000  @ 12
+TRACE:Hash is now 0x6cd4d044
+TRACE:fault:	807c:	e320f000  @ 13
+TRACE:Hash is now 0x99359f2
+TRACE:fault:	8080:	e12fff1e  @ 14
+TRACE:Hash is now 0xaa187efa
+TRACE:fault:	8048:	e1a01000  @ 15
+TRACE:Hash is now 0xdaf304a4
+TRACE:fault:	804c:	e3a00002  @ 16
+TRACE:Hash is now 0x6066f9c0
+TRACE:fault:	8050:	ef000001  @ 17
+TRACE:Register 0 changed to value 2
+TRACE:Hash is now 0x45ce3aac
+TRACE:nop_10: exited with syscall=2: arg0=0, pc=0x8054
+TRACE:POST: done single-stepping nop_10
+TRACE:	n_inst=17: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8054
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:expect: pc should be 0x8054!
+TRACE:success: exit pc=0x8054!
+TRACE:******************<mov_ident>******************************
+TRACE:PRE: about to single step <mov_ident>
+TRACE:fault:	8088:	e3a00000  @ 18
+TRACE:Register 0 changed to value 0
+TRACE:Hash is now 0x91a0bf19
+TRACE:fault:	808c:	e3a01001  @ 19
+TRACE:Hash is now 0x27598a9a
+TRACE:fault:	8090:	e3a02002  @ 20
+TRACE:Register 1 changed to value 1
+TRACE:Hash is now 0x2a4945ef
+TRACE:fault:	8094:	e3a03003  @ 21
+TRACE:Register 2 changed to value 2
+TRACE:Hash is now 0x451c0abd
+TRACE:fault:	8098:	e3a04004  @ 22
+TRACE:Register 3 changed to value 3
+TRACE:Hash is now 0x196b4525
+TRACE:fault:	809c:	e3a05005  @ 23
+TRACE:Register 4 changed to value 4
+TRACE:Hash is now 0x37d8db2e
+TRACE:fault:	80a0:	e3a06006  @ 24
+TRACE:Register 5 changed to value 5
+TRACE:Hash is now 0x424f619e
+TRACE:fault:	80a4:	e3a07007  @ 25
+TRACE:Register 6 changed to value 6
+TRACE:Hash is now 0x632d8705
+TRACE:fault:	80a8:	e3a08008  @ 26
+TRACE:Register 7 changed to value 7
+TRACE:Hash is now 0x515aa7fa
+TRACE:fault:	80ac:	e3a09009  @ 27
+TRACE:Register 8 changed to value 8
+TRACE:Hash is now 0xeb2fdd96
+TRACE:fault:	80b0:	e3a0a00a  @ 28
+TRACE:Register 9 changed to value 9
+TRACE:Hash is now 0x1bd79eff
+TRACE:fault:	80b4:	e3a0b00b  @ 29
+TRACE:Register 10 changed to value 10
+TRACE:Hash is now 0x1ec92426
+TRACE:fault:	80b8:	e3a0c00c  @ 30
+TRACE:Register 11 changed to value 11
+TRACE:Hash is now 0xf5749fa2
+TRACE:fault:	80bc:	e12fff1e  @ 31
+TRACE:Register 12 changed to value 12
+TRACE:Hash is now 0x13885ed2
+TRACE:fault:	8048:	e1a01000  @ 32
+TRACE:Hash is now 0x59bc3620
+TRACE:fault:	804c:	e3a00002  @ 33
+TRACE:Register 1 changed to value 0
+TRACE:Hash is now 0x7fac4b48
+TRACE:fault:	8050:	ef000001  @ 34
+TRACE:Register 0 changed to value 2
+TRACE:Hash is now 0x605dcdbc
+TRACE:mov_ident: exited with syscall=2: arg0=0, pc=0x8054
+TRACE:POST: done single-stepping mov_ident
+TRACE:	n_inst=34: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r2 = 0x2
+TRACE:		r3 = 0x3
+TRACE:		r4 = 0x4
+TRACE:		r5 = 0x5
+TRACE:		r6 = 0x6
+TRACE:		r7 = 0x7
+TRACE:		r8 = 0x8
+TRACE:		r9 = 0x9
+TRACE:		r10 = 0xa
+TRACE:		r11 = 0xb
+TRACE:		r12 = 0xc
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8054
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:success: exit pc=0x8054!
+TRACE:******************<hello>******************************
+TRACE:about to print hello world single-step, w/ yapping:
+TRACE:PRE: about to single step <hello_asm>
+TRACE:fault:	80c4:	e52de004  @ 1
+TRACE:Register 0 changed to value 0
+TRACE:Register 2 changed to value 0
+TRACE:Register 3 changed to value 0
+TRACE:Register 4 changed to value 0
+TRACE:Register 5 changed to value 0
+TRACE:Register 6 changed to value 0
+TRACE:Register 7 changed to value 0
+TRACE:Register 8 changed to value 0
+TRACE:Register 9 changed to value 0
+TRACE:Register 10 changed to value 0
+TRACE:Register 11 changed to value 0
+TRACE:Register 12 changed to value 0
+TRACE:Register 13 changed to value 1114112
+TRACE:Hash is now 0x2e4d1a0c
+TRACE:fault:	80c8:	e3a00068  @ 2
+TRACE:Register 13 changed to value 1114108
+TRACE:Hash is now 0xb59f42ff
+TRACE:fault:	80cc:	eb000017  @ 3
+TRACE:Register 0 changed to value 104
+TRACE:Hash is now 0x2339c4b2
+TRACE:fault:	8130:	e1a01000  @ 4
+TRACE:Register 14 changed to value 32976
+TRACE:Hash is now 0x4af0303
+TRACE:fault:	8134:	e3a00003  @ 5
+TRACE:Register 1 changed to value 104
+TRACE:Hash is now 0xad05e5ea
+TRACE:fault:	8138:	ef000001  @ 6
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x97481e87
+hTRACE:fault:	813c:	e12fff1e  @ 7
+TRACE:Hash is now 0x66d422ad
+TRACE:fault:	80d0:	e3a00065  @ 8
+TRACE:Hash is now 0xb12a5998
+TRACE:fault:	80d4:	eb000015  @ 9
+TRACE:Register 0 changed to value 101
+TRACE:Hash is now 0x3315041
+TRACE:fault:	8130:	e1a01000  @ 10
+TRACE:Register 14 changed to value 32984
+TRACE:Hash is now 0xb41f4635
+TRACE:fault:	8134:	e3a00003  @ 11
+TRACE:Register 1 changed to value 101
+TRACE:Hash is now 0xc752bfef
+TRACE:fault:	8138:	ef000001  @ 12
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x163c69e7
+eTRACE:fault:	813c:	e12fff1e  @ 13
+TRACE:Hash is now 0x94687989
+TRACE:fault:	80d8:	e3a0006c  @ 14
+TRACE:Hash is now 0xfcd72dfe
+TRACE:fault:	80dc:	eb000013  @ 15
+TRACE:Register 0 changed to value 108
+TRACE:Hash is now 0xa0532676
+TRACE:fault:	8130:	e1a01000  @ 16
+TRACE:Register 14 changed to value 32992
+TRACE:Hash is now 0x61279693
+TRACE:fault:	8134:	e3a00003  @ 17
+TRACE:Register 1 changed to value 108
+TRACE:Hash is now 0xb6ef4ea4
+TRACE:fault:	8138:	ef000001  @ 18
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0xd8ed826a
+lTRACE:fault:	813c:	e12fff1e  @ 19
+TRACE:Hash is now 0x864efe6d
+TRACE:fault:	80e0:	e3a0006c  @ 20
+TRACE:Hash is now 0x63d624f9
+TRACE:fault:	80e4:	eb000011  @ 21
+TRACE:Register 0 changed to value 108
+TRACE:Hash is now 0x95e8ed4e
+TRACE:fault:	8130:	e1a01000  @ 22
+TRACE:Register 14 changed to value 33000
+TRACE:Hash is now 0xc25d6a5d
+TRACE:fault:	8134:	e3a00003  @ 23
+TRACE:Hash is now 0xcc5d333f
+TRACE:fault:	8138:	ef000001  @ 24
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0xcefa55e
+lTRACE:fault:	813c:	e12fff1e  @ 25
+TRACE:Hash is now 0xdba63f15
+TRACE:fault:	80e8:	e3a0006f  @ 26
+TRACE:Hash is now 0x89fcb800
+TRACE:fault:	80ec:	eb00000f  @ 27
+TRACE:Register 0 changed to value 111
+TRACE:Hash is now 0x4d4af2c8
+TRACE:fault:	8130:	e1a01000  @ 28
+TRACE:Register 14 changed to value 33008
+TRACE:Hash is now 0xe060a4ac
+TRACE:fault:	8134:	e3a00003  @ 29
+TRACE:Register 1 changed to value 111
+TRACE:Hash is now 0x8c88ede8
+TRACE:fault:	8138:	ef000001  @ 30
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x482ea306
+oTRACE:fault:	813c:	e12fff1e  @ 31
+TRACE:Hash is now 0x1e06f7e6
+TRACE:fault:	80f0:	e3a00020  @ 32
+TRACE:Hash is now 0xf4045000
+TRACE:fault:	80f4:	eb00000d  @ 33
+TRACE:Register 0 changed to value 32
+TRACE:Hash is now 0x5bacee7e
+TRACE:fault:	8130:	e1a01000  @ 34
+TRACE:Register 14 changed to value 33016
+TRACE:Hash is now 0x8dfaa9ac
+TRACE:fault:	8134:	e3a00003  @ 35
+TRACE:Register 1 changed to value 32
+TRACE:Hash is now 0xfe1e95eb
+TRACE:fault:	8138:	ef000001  @ 36
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x1e1547bb
+ TRACE:fault:	813c:	e12fff1e  @ 37
+TRACE:Hash is now 0x69234ef4
+TRACE:fault:	80f8:	e3a00077  @ 38
+TRACE:Hash is now 0xb170be73
+TRACE:fault:	80fc:	eb00000b  @ 39
+TRACE:Register 0 changed to value 119
+TRACE:Hash is now 0x2748469d
+TRACE:fault:	8130:	e1a01000  @ 40
+TRACE:Register 14 changed to value 33024
+TRACE:Hash is now 0xf15e6db6
+TRACE:fault:	8134:	e3a00003  @ 41
+TRACE:Register 1 changed to value 119
+TRACE:Hash is now 0xc7cee899
+TRACE:fault:	8138:	ef000001  @ 42
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x3058109e
+wTRACE:fault:	813c:	e12fff1e  @ 43
+TRACE:Hash is now 0x2c80ed0
+TRACE:fault:	8100:	e3a0006f  @ 44
+TRACE:Hash is now 0x96358609
+TRACE:fault:	8104:	eb000009  @ 45
+TRACE:Register 0 changed to value 111
+TRACE:Hash is now 0x9982267e
+TRACE:fault:	8130:	e1a01000  @ 46
+TRACE:Register 14 changed to value 33032
+TRACE:Hash is now 0x5f993cd2
+TRACE:fault:	8134:	e3a00003  @ 47
+TRACE:Register 1 changed to value 111
+TRACE:Hash is now 0x285e2bc1
+TRACE:fault:	8138:	ef000001  @ 48
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0xe392b2b3
+oTRACE:fault:	813c:	e12fff1e  @ 49
+TRACE:Hash is now 0xdded2160
+TRACE:fault:	8108:	e3a00072  @ 50
+TRACE:Hash is now 0xefae9554
+TRACE:fault:	810c:	eb000007  @ 51
+TRACE:Register 0 changed to value 114
+TRACE:Hash is now 0xbdbb1109
+TRACE:fault:	8130:	e1a01000  @ 52
+TRACE:Register 14 changed to value 33040
+TRACE:Hash is now 0xb4d69c84
+TRACE:fault:	8134:	e3a00003  @ 53
+TRACE:Register 1 changed to value 114
+TRACE:Hash is now 0xd9afeff9
+TRACE:fault:	8138:	ef000001  @ 54
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x7414b0e0
+rTRACE:fault:	813c:	e12fff1e  @ 55
+TRACE:Hash is now 0x9f845cba
+TRACE:fault:	8110:	e3a0006c  @ 56
+TRACE:Hash is now 0xa53eb979
+TRACE:fault:	8114:	eb000005  @ 57
+TRACE:Register 0 changed to value 108
+TRACE:Hash is now 0x519de3a4
+TRACE:fault:	8130:	e1a01000  @ 58
+TRACE:Register 14 changed to value 33048
+TRACE:Hash is now 0x7ce37f8e
+TRACE:fault:	8134:	e3a00003  @ 59
+TRACE:Register 1 changed to value 108
+TRACE:Hash is now 0xd0909be6
+TRACE:fault:	8138:	ef000001  @ 60
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x8850814b
+lTRACE:fault:	813c:	e12fff1e  @ 61
+TRACE:Hash is now 0xa63d0137
+TRACE:fault:	8118:	e3a00064  @ 62
+TRACE:Hash is now 0xd46b2996
+TRACE:fault:	811c:	eb000003  @ 63
+TRACE:Register 0 changed to value 100
+TRACE:Hash is now 0x260b4619
+TRACE:fault:	8130:	e1a01000  @ 64
+TRACE:Register 14 changed to value 33056
+TRACE:Hash is now 0xa5c936e8
+TRACE:fault:	8134:	e3a00003  @ 65
+TRACE:Register 1 changed to value 100
+TRACE:Hash is now 0x926dcaf
+TRACE:fault:	8138:	ef000001  @ 66
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x202e7845
+dTRACE:fault:	813c:	e12fff1e  @ 67
+TRACE:Hash is now 0x84417e8e
+TRACE:fault:	8120:	e3a0000a  @ 68
+TRACE:Hash is now 0x65afe0c1
+TRACE:fault:	8124:	eb000001  @ 69
+TRACE:Register 0 changed to value 10
+TRACE:Hash is now 0x52f4f43
+TRACE:fault:	8130:	e1a01000  @ 70
+TRACE:Register 14 changed to value 33064
+TRACE:Hash is now 0x33d57965
+TRACE:fault:	8134:	e3a00003  @ 71
+TRACE:Register 1 changed to value 10
+TRACE:Hash is now 0x412c9494
+TRACE:fault:	8138:	ef000001  @ 72
+TRACE:Register 0 changed to value 3
+TRACE:Hash is now 0x8ec2fbd9
+TRACE:fault:	813c:	e12fff1e  @ 73
+TRACE:Hash is now 0x7e877a23
+TRACE:fault:	8128:	e49de004  @ 74
+TRACE:Hash is now 0x7c00f296
+TRACE:fault:	812c:	e12fff1e  @ 75
+TRACE:Register 13 changed to value 1114112
+TRACE:Register 14 changed to value 32840
+TRACE:Hash is now 0x2c34f8d4
+TRACE:fault:	8048:	e1a01000  @ 76
+TRACE:Hash is now 0xc3838be2
+TRACE:fault:	804c:	e3a00002  @ 77
+TRACE:Register 1 changed to value 3
+TRACE:Hash is now 0x3bb617f6
+TRACE:fault:	8050:	ef000001  @ 78
+TRACE:Register 0 changed to value 2
+TRACE:Hash is now 0x4f1ec317
+TRACE:hello_asm: exited with syscall=2: arg0=3, pc=0x8054
+TRACE:POST: done single-stepping hello_asm
+TRACE:	n_inst=78: non-zero regs= {
+TRACE:		r0 = 0x2
+TRACE:		r1 = 0x3
+TRACE:		r13 = 0x110000
+TRACE:		r14 = 0x8048
+TRACE:		r15 = 0x8054
+TRACE:		cpsr=0x110
+TRACE:	}
+TRACE:ran 78 instructions
+TRACE:******************<hello>******************************
+TRACE:about to print hello world single-step, no yapping:

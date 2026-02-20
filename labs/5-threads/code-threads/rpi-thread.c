@@ -51,6 +51,10 @@ static unsigned tid = 1;
 // total number of thread blocks we have allocated.
 static unsigned nalloced = 0;
 
+void dbg(void) {
+    th_trace("debug msg\n");
+}
+
 // keep a cache of freed thread blocks.  call kmalloc if run out.
 static rpi_thread_t *th_alloc(void) {
     RZ_CHECK();
@@ -81,7 +85,7 @@ static void th_free(rpi_thread_t *th) {
 //  - see <code-asm-checks/5-write-regs.c>
 enum {
     R4_OFFSET = 0,
-    R5_OFFSET,
+    R5_OFFSET = 1,
     R6_OFFSET,
     R7_OFFSET,
     R8_OFFSET,
@@ -120,7 +124,14 @@ rpi_thread_t *rpi_fork(void (*code)(void *arg), void *arg) {
      * - see <code-asm-checks/5-write-regs.c> for how to 
      *   coordinate offsets b/n asm and C code.
      */
-    todo("initialize thread stack");
+    
+        t->saved_sp = t->stack + THREAD_MAXSTACK - LR_OFFSET - 1;
+        t->fn = code;
+        t->arg = arg;
+   
+        t->saved_sp[LR_OFFSET] = (unsigned) &rpi_init_trampoline;
+        t->saved_sp[R4_OFFSET] = (unsigned) arg;
+        t->saved_sp[R5_OFFSET] = (unsigned) code;
 
     // should check that <t->saved_sp> points within the 
     // thread stack.
@@ -141,7 +152,20 @@ void rpi_exit(int exitcode) {
 
     // if you switch back to the scheduler thread put this in:
     //      th_trace("done running threads, back to scheduler\n");
-    todo("implement rpi_exit");
+    
+    rpi_thread_t *old_t = cur_thread;
+    th_free(old_t);
+
+    
+    if (Q_empty(&runq)) {
+        cur_thread = scheduler_thread;
+        th_trace("done running threads, back to scheduler\n");
+        rpi_cswitch(&old_t->saved_sp, cur_thread->saved_sp);
+        
+    } else {
+        cur_thread = Q_pop(&runq);
+        rpi_cswitch(&old_t->saved_sp, cur_thread->saved_sp);
+    }
 
     // should never return.
     not_reached();
@@ -159,7 +183,20 @@ void rpi_yield(void) {
     // NOTE: if you switch to another thread: print the statement:
     //     th_trace("switching from tid=%d to tid=%d\n", old->tid, t->tid);
 
-    todo("implement the rest of rpi_yield");
+    if (Q_empty(&runq)) {
+        return;
+    }
+
+    rpi_thread_t *old_t = cur_thread;
+
+    Q_append(&runq, cur_thread);
+
+    cur_thread = Q_pop(&runq);
+    
+    th_trace("switching from tid=%d to tid=%d\n", old_t->tid, cur_thread->tid);
+    rpi_cswitch(&old_t->saved_sp, cur_thread->saved_sp);
+
+    
 }
 
 /*
@@ -178,16 +215,27 @@ void rpi_thread_start(void) {
         goto end;
 
     // setup scheduler thread block.
-    if(!scheduler_thread)
+    if(!scheduler_thread){
         scheduler_thread = th_alloc();
+    }
 
-    todo("implement the rest of rpi_thread_start");
+    rpi_thread_t *prev_thread = scheduler_thread;
+    
+   
+    while (!Q_empty(&runq)) {
+        cur_thread = Q_pop(&runq);
+        rpi_cswitch(&prev_thread->saved_sp, cur_thread->saved_sp);
+        prev_thread = cur_thread;
+    }
+
+    
 
 end:
     RZ_CHECK();
     // if not more threads should print:
     th_trace("done with all threads, returning\n");
 }
+
 
 // helper routine: can call from assembly with r0=sp and it
 // will print the stack out.  it then exits.

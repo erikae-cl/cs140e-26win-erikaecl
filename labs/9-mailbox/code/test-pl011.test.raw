@@ -1,0 +1,12 @@
+DEBUG:done with options: dev name=</dev/cu.usbserial-210>, pi-prog=<./test-pl011.bin>, trace=0
+opened tty port </dev/cu.usbserial-210>.
+DEBUG:my-install: tty-usb=</dev/cu.usbserial-210> program=<./test-pl011.bin>: about to boot
+TRACE:simple_boot: sending 6536 bytes, crc32=5b1e76fc
+BOOT:waiting for a start
+DEBUG:PRINT_STRING:pi sent print: <UART Clara Wang: success: Received the program!>
+BOOT:bootloader: Done.
+hello from miniUART
+hello from pl011
+DONE!!!
+
+bootloader: pi exited.  cleaning up

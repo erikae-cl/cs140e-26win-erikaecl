@@ -86,6 +86,7 @@ void rpi_exit(int exitcode);
 // yield the current thread.
 void rpi_yield(void);
 
+void sleep_until_us(uint32_t us);
 /***************************************************************
  * internal routines: we put them here so you don't have to look
  * for the prototype.

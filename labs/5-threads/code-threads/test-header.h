@@ -3,6 +3,8 @@
 
 #include "rpi.h"
 #include "rpi-thread.h"
+// #include "rpi-thread-copy.h"
+#include "rpi-thread-sleep.h"
 #include "redzone.h"
 
 static void inline test_init(void) {

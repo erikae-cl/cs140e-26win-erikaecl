@@ -36,16 +36,23 @@ int check_activity(void) {
 
     static time_t last_mtime;   // store last modification time.
 
-    unimplemented();
+    struct dirent **names;
+
+    int num = scandir("./", &names, NULL, alphasort);
+
+    
+
+
+    // unimplemented();
 
     // return 1 if anything that matched <suffixes>
-    return changed_p;
+    return changed_p > 1;
 }
 
 // synchronously wait for <pid> to exit.  returns 1 if it exited
 // cleanly (via exit(0)), 0 otherwise.
 static int pid_clean_exit(int pid) {
-    unimplemented();
+    // unimplemented();
 }
 
 // simple helper to print null terminated vector of strings.

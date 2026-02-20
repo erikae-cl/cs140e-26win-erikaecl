@@ -5,7 +5,7 @@
 
 @ return the current stack pointer.
 MK_FN(rpi_get_sp)
-    asm_todo("implement this")
+    
     bx lr
 
 @ void rpi_cswitch(uint32_t **old_sp_save, const uint32_t *new_sp);
@@ -26,8 +26,24 @@ MK_FN(rpi_get_sp)
 @    4. load all the callee + <lr> using the sp.
 @    5. return!
 MK_FN(rpi_cswitch)
-    asm_todo("implement this")
+    
+    push {r4-r11, lr}
+    str sp, [r0]
+    mov sp, r1
+    pop {r4-r11, lr}
+
     bx lr
+
+MK_FN(co_cswitch)
+    stmia r0!, {r4-r11}
+    str sp, [r0], #4
+    str lr, [r0], #4
+
+    ldmia r1!, {r4-r11}
+    ldr sp, [r1], #4
+    ldr lr, [r1], #4
+    bx lr
+    
 
 @ [Make sure you can answer: why do we need this
 @ weird little routine?]
@@ -39,5 +55,7 @@ MK_FN(rpi_cswitch)
 @	- <arg> into r0
 @ 
 MK_FN(rpi_init_trampoline)
-    asm_todo("implement this")
-    bx lr
+    mov r0, r4
+    mov r1, r5
+    blx r1
+    bl rpi_exit

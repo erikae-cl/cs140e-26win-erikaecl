@@ -1,0 +1,13 @@
+DEBUG:done with options: dev name=</dev/cu.usbserial-10>, pi-prog=<./tests/2-increment-fail-test.bin>, trace=0
+opened tty port </dev/cu.usbserial-10>.
+DEBUG:my-install: tty-usb=</dev/cu.usbserial-10> program=<./tests/2-increment-fail-test.bin>: about to boot
+TRACE:simple_boot: sending 13344 bytes, crc32=d67b4099
+BOOT:waiting for a start
+expected initial GET_PROG_INFO, got <112222fe>: discarding.
+DEBUG:PRINT_STRING:pi sent print: <UART Clara Wang: success: Received the program!>
+BOOT:bootloader: Done.
+PANIC:tests/2-increment-fail-test.c:notmain:29:check should have failed!
+
+DONE!!!
+
+bootloader: pi exited.  cleaning up

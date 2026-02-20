@@ -1,0 +1,11 @@
+DEBUG:done with options: dev name=</dev/cu.usbserial-10>, pi-prog=<./cycles-per-sec.bin>, trace=0
+opened tty port </dev/cu.usbserial-10>.
+DEBUG:my-install: tty-usb=</dev/cu.usbserial-10> program=<./cycles-per-sec.bin>: about to boot
+TRACE:simple_boot: sending 2768 bytes, crc32=43908773
+BOOT:waiting for a start
+DEBUG:PRINT_STRING:pi sent print: <UART Clara Wang: success: Received the program!>
+BOOT:bootloader: Done.
+cycles per sec = 699999068
+DONE!!!
+
+bootloader: pi exited.  cleaning up

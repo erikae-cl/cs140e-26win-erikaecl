@@ -1,0 +1,14 @@
+opened tty port </dev/cu.SLAB_USBtoUART>.
+pi-install: tty-usb=</dev/cu.SLAB_USBtoUART> program=<./3-push-order.bin> about to boot
+TRACE:simple_boot: sending 4092 bytes, crc32=690ff3ce
+waiting for a start
+putting code
+bootloader: Done.
+listening on ttyusb=</dev/cu.SLAB_USBtoUART>
+PANIC:3-push-order.c:notmain:31:TODO:what does this imply?
+
+DONE!!!
+
+Saw done
+
+bootloader: pi exited.  cleaning up

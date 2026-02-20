@@ -1,0 +1,12 @@
+DEBUG:done with options: dev name=</dev/cu.usbserial-10>, pi-prog=<./tests/2-increment-fail-test.bin>, trace=0
+opened tty port </dev/cu.usbserial-10>.
+DEBUG:my-install: tty-usb=</dev/cu.usbserial-10> program=<./tests/2-increment-fail-test.bin>: about to boot
+TRACE:simple_boot: sending 14432 bytes, crc32=df3e9718
+BOOT:waiting for a start
+DEBUG:PRINT_STRING:pi sent print: <UART Clara Wang: success: Received the program!>
+BOOT:bootloader: Done.
+ENABLE
+SUCCESS:check failed as it should have, ntrials=[3], nerrors=[1]
+DONE!!!
+
+bootloader: pi exited.  cleaning up

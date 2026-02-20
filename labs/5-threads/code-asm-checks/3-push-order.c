@@ -21,14 +21,14 @@ void notmain() {
     assert(res == &v[0]);
 
     // note this also shows you the order of writes.
-    if(v[2] == val2 && v[1] == val1) {
+    if(v[1] == val1 && v[0] == val2) {
         assert(v[3] == 4);
         assert(v[0] == 1);
-        todo("what does this imply?\n");
+        trace("lower reg at higher addr\n");
     } else if(v[1] == val2 && v[0] == val1) {
         assert(v[3] == 4);
         assert(v[2] == 3);
-        todo("what does this imply?\n");
+        trace("lower reg at lower addr\n");
     } else 
         panic("unexpected result\n");
 }

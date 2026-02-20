@@ -13,8 +13,12 @@
 static volatile checker_t *checker = 0;
 
 int brk_verbose_p = 0;
+int switch_on_inst_n = 1;
+int switched_p = 0;
 
 static void A_terminated(uint32_t ret);
+
+
 
 
 // invoked from user level: 
@@ -36,13 +40,21 @@ static int syscall_handler_full(regs_t *r) {
     // the system call.
     uint32_t pc = r->regs[15];      
 
+    pi_lock_t *l;
     switch(sys_num) {
     case SYS_RESUME:
             // used to do a context switch from user->privileged.
             switchto((void*)arg0);
             panic("not reached\n");
     case SYS_TRYLOCK:
-        panic("not handling yet\n");
+        l = (pi_lock_t*)arg0;
+        if (*l == 1) {
+            return 0;
+        } else {
+            *l = 1;
+            return 1;
+        }
+        
 
     case SYS_TEST:
         printk("running empty syscall with arg=%d\n", arg0);
@@ -69,7 +81,35 @@ static void single_step_handler_full(regs_t *r) {
 
 
     // TODO: you'll have to add code to do the switching here.
-    output("single-step handler: inst=%d: A:pc=%x\n", n,pc);
+    // output("single-step handler: inst=%d: A:pc=%x\n", n,pc);
+
+    if (pc == (uint32_t) A_terminated) {
+        brkpt_mismatch_stop();
+        return;
+    }
+
+    // checker->switch_addr = pc;
+   
+    if (n == checker->switch_on_inst_n) {
+        // trace("trying to run B\n");  
+
+        if (checker->B((void *)checker)) {
+            // trace("Succesfully ran B\n");
+            brkpt_mismatch_stop();
+            checker->nswitches++;
+            checker->switched_p = 1;
+            switchto(r);
+
+        } else {
+            checker->switch_on_inst_n += 1;
+            checker->skips++;
+
+        }
+    }
+
+    
+
+    
 
     // recall: the weird way single step works: run the instruction 
     // at address <pc>, by setting up a mismatch fault for any other
@@ -85,6 +125,7 @@ static regs_t start_regs;
 // this is called when A() returns: assumes you are at user level.
 // switch back to <start_regs>
 static void A_terminated(uint32_t ret) {
+    // trace("finishing A\n");
     uint32_t cpsr = mode_get(cpsr_get());
     if(cpsr != USER_MODE)
         panic("should be at USER, at <%s> mode\n", mode_str(cpsr));
@@ -93,6 +134,7 @@ static void A_terminated(uint32_t ret) {
     start_regs.regs[0] = ret;
     sys_switchto(&start_regs);
 }
+
 
 // run routine <c->A()> at user level by making a stack,
 // switching into it 
@@ -222,7 +264,33 @@ int check(checker_t *c) {
     //  }
     // 
     //  return 0 if there were errors.
-    todo("implement true interleaving!\n");
+    // todo("implement true interleaving!\n");
+  
 
+    for(int i = 0; ; i++) {
+        
+        c->init(c);
+        c->inst_count = 0;
+        c->nswitches = 0;
+        c->skips = 0;
+        c->ntrials += 1;
+
+        c->switched_p = 0;
+        c->switch_on_inst_n = i + 1;
+        run_A_at_userlevel(c);
+        
+        if (!c->switched_p) {
+            break;
+        }
+      
+        if (!c->check(c)) {
+            c->nerrors++;
+            return 0;
+        }
+    
+
+
+    }
     return 1;
+
 }

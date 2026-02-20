@@ -1,0 +1,80 @@
+opened tty port </dev/cu.SLAB_USBtoUART>.
+pi-install: tty-usb=</dev/cu.SLAB_USBtoUART> program=<./1-test-run-N.bin> about to boot
+TRACE:simple_boot: sending 9860 bytes, crc32=7b0bbe47
+waiting for a start
+putting code
+bootloader: Done.
+listening on ttyusb=</dev/cu.SLAB_USBtoUART>
+test-header.h:test_init:14: <initialized redzone>
+TRACE:notmain:about to test summing of 30 threads
+TRACE:rpi_fork:rpi_fork: tid=1, code=[0x8038], arg=[0x100000], saved_sp=[0x101ffc]
+TRACE:rpi_fork:rpi_fork: tid=2, code=[0x8038], arg=[0x102020], saved_sp=[0x10401c]
+TRACE:rpi_fork:rpi_fork: tid=3, code=[0x8038], arg=[0x104040], saved_sp=[0x10603c]
+TRACE:rpi_fork:rpi_fork: tid=4, code=[0x8038], arg=[0x106060], saved_sp=[0x10805c]
+TRACE:rpi_fork:rpi_fork: tid=5, code=[0x8038], arg=[0x108080], saved_sp=[0x10a07c]
+TRACE:rpi_fork:rpi_fork: tid=6, code=[0x8038], arg=[0x10a0a0], saved_sp=[0x10c09c]
+TRACE:rpi_fork:rpi_fork: tid=7, code=[0x8038], arg=[0x10c0c0], saved_sp=[0x10e0bc]
+TRACE:rpi_fork:rpi_fork: tid=8, code=[0x8038], arg=[0x10e0e0], saved_sp=[0x1100dc]
+TRACE:rpi_fork:rpi_fork: tid=9, code=[0x8038], arg=[0x110100], saved_sp=[0x1120fc]
+TRACE:rpi_fork:rpi_fork: tid=10, code=[0x8038], arg=[0x112120], saved_sp=[0x11411c]
+TRACE:rpi_fork:rpi_fork: tid=11, code=[0x8038], arg=[0x114140], saved_sp=[0x11613c]
+TRACE:rpi_fork:rpi_fork: tid=12, code=[0x8038], arg=[0x116160], saved_sp=[0x11815c]
+TRACE:rpi_fork:rpi_fork: tid=13, code=[0x8038], arg=[0x118180], saved_sp=[0x11a17c]
+TRACE:rpi_fork:rpi_fork: tid=14, code=[0x8038], arg=[0x11a1a0], saved_sp=[0x11c19c]
+TRACE:rpi_fork:rpi_fork: tid=15, code=[0x8038], arg=[0x11c1c0], saved_sp=[0x11e1bc]
+TRACE:rpi_fork:rpi_fork: tid=16, code=[0x8038], arg=[0x11e1e0], saved_sp=[0x1201dc]
+TRACE:rpi_fork:rpi_fork: tid=17, code=[0x8038], arg=[0x120200], saved_sp=[0x1221fc]
+TRACE:rpi_fork:rpi_fork: tid=18, code=[0x8038], arg=[0x122220], saved_sp=[0x12421c]
+TRACE:rpi_fork:rpi_fork: tid=19, code=[0x8038], arg=[0x124240], saved_sp=[0x12623c]
+TRACE:rpi_fork:rpi_fork: tid=20, code=[0x8038], arg=[0x126260], saved_sp=[0x12825c]
+TRACE:rpi_fork:rpi_fork: tid=21, code=[0x8038], arg=[0x128280], saved_sp=[0x12a27c]
+TRACE:rpi_fork:rpi_fork: tid=22, code=[0x8038], arg=[0x12a2a0], saved_sp=[0x12c29c]
+TRACE:rpi_fork:rpi_fork: tid=23, code=[0x8038], arg=[0x12c2c0], saved_sp=[0x12e2bc]
+TRACE:rpi_fork:rpi_fork: tid=24, code=[0x8038], arg=[0x12e2e0], saved_sp=[0x1302dc]
+TRACE:rpi_fork:rpi_fork: tid=25, code=[0x8038], arg=[0x130300], saved_sp=[0x1322fc]
+TRACE:rpi_fork:rpi_fork: tid=26, code=[0x8038], arg=[0x132320], saved_sp=[0x13431c]
+TRACE:rpi_fork:rpi_fork: tid=27, code=[0x8038], arg=[0x134340], saved_sp=[0x13633c]
+TRACE:rpi_fork:rpi_fork: tid=28, code=[0x8038], arg=[0x136360], saved_sp=[0x13835c]
+TRACE:rpi_fork:rpi_fork: tid=29, code=[0x8038], arg=[0x138380], saved_sp=[0x13a37c]
+TRACE:rpi_fork:rpi_fork: tid=30, code=[0x8038], arg=[0x13a3a0], saved_sp=[0x13c39c]
+TRACE:rpi_thread_start:starting threads!
+TRACE:thread_code:in thread [0x100008], tid=1 with x=0
+TRACE:thread_code:in thread [0x102028], tid=2 with x=1
+TRACE:thread_code:in thread [0x104048], tid=3 with x=2
+TRACE:thread_code:in thread [0x106068], tid=4 with x=3
+TRACE:thread_code:in thread [0x108088], tid=5 with x=4
+TRACE:thread_code:in thread [0x10a0a8], tid=6 with x=5
+TRACE:thread_code:in thread [0x10c0c8], tid=7 with x=6
+TRACE:thread_code:in thread [0x10e0e8], tid=8 with x=7
+TRACE:thread_code:in thread [0x110108], tid=9 with x=8
+TRACE:thread_code:in thread [0x112128], tid=10 with x=9
+TRACE:thread_code:in thread [0x114148], tid=11 with x=10
+TRACE:thread_code:in thread [0x116168], tid=12 with x=11
+TRACE:thread_code:in thread [0x118188], tid=13 with x=12
+TRACE:thread_code:in thread [0x11a1a8], tid=14 with x=13
+TRACE:thread_code:in thread [0x11c1c8], tid=15 with x=14
+TRACE:thread_code:in thread [0x11e1e8], tid=16 with x=15
+TRACE:thread_code:in thread [0x120208], tid=17 with x=16
+TRACE:thread_code:in thread [0x122228], tid=18 with x=17
+TRACE:thread_code:in thread [0x124248], tid=19 with x=18
+TRACE:thread_code:in thread [0x126268], tid=20 with x=19
+TRACE:thread_code:in thread [0x128288], tid=21 with x=20
+TRACE:thread_code:in thread [0x12a2a8], tid=22 with x=21
+TRACE:thread_code:in thread [0x12c2c8], tid=23 with x=22
+TRACE:thread_code:in thread [0x12e2e8], tid=24 with x=23
+TRACE:thread_code:in thread [0x130308], tid=25 with x=24
+TRACE:thread_code:in thread [0x132328], tid=26 with x=25
+TRACE:thread_code:in thread [0x134348], tid=27 with x=26
+TRACE:thread_code:in thread [0x136368], tid=28 with x=27
+TRACE:thread_code:in thread [0x138388], tid=29 with x=28
+TRACE:thread_code:in thread [0x13a3a8], tid=30 with x=29
+TRACE:rpi_exit:done running threads, back to scheduler
+TRACE:rpi_thread_start:done with all threads, returning
+TRACE:notmain:count = 30, sum=435
+test-header.h:test_done:18: <done with test>
+TRACE:notmain:SUCCESS!
+DONE!!!
+
+Saw done
+
+bootloader: pi exited.  cleaning up

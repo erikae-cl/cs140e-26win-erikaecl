@@ -10,9 +10,18 @@
 //   - bonus: also use inline assembly or a gcc intrinsic to get the
 //     stack pointer and compare.
 #include "rpi.h"
+#include <stdio.h>
 
+
+int *other(int a) {
+    int *ptr = &a;
+    return ptr;
+
+}
 int stack_grows_down(void) {
-    todo("implement this routine\n");
+    int a = 1;
+    unsigned addr = (unsigned)&a;
+    return (unsigned)other(a) - addr;
 }
 
 void notmain(void) {

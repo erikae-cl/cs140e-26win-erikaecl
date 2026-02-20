@@ -8,6 +8,7 @@
 #include "timer-interrupt.h"
 // you write this header in part 1.
 #include "vector-base.h"
+#include "uart_interrupts.h"
 
 // our prototypes. 
 #include "test-interrupts.h"
@@ -34,8 +35,12 @@ void interrupt_vector(unsigned pc) {
     dev_barrier();
     n_interrupt++;
 
-    if(!interrupt_fn(pc))
+    // 1. Check if the UART (Aux) is the one interrupting
+    if (!interrupt_fn(pc)) {
+   
         panic("got interrupt: but not handled by registered handlers\n");
+    }
+
 
     dev_barrier();
 }
@@ -83,14 +88,48 @@ void test_init(init_fn_t init_fn, interrupt_fn_t int_fn) {
     extern uint32_t interrupt_vec[];
     vector_base_set(interrupt_vec);
 
+
     init_fn();
     interrupt_fn = int_fn;
 
-    // in case there was an event queued up.
+     // in case there was an event queued up.
     gpio_event_clear(in_pin);
 
     // start global interrupts.
     cpsr_int_enable();
+}
+
+void test_init_uart(init_fn_t init_fn, interrupt_fn_t int_fn) {
+    // check loopback.
+
+   
+    // initialize.
+
+    // make sure system interrupts are off.
+    cpsr_int_disable();
+
+    // just like lab 4-interrupts: force clear 
+    // interrupt state
+    //  BCM2835 manual, section 7.5 , 112
+    dev_barrier();
+    PUT32(IRQ_Disable_1, 0xffffffff);
+    PUT32(IRQ_Disable_2, 0xffffffff);
+    dev_barrier();
+
+    // setup the vector.
+    extern uint32_t interrupt_vec[];
+    vector_base_set(interrupt_vec);
+
+    
+    init_fn();
+    interrupt_fn = int_fn;
+
+    // start global interrupts.
+    cpsr_int_enable();
+}
+
+void uart_test_init(void) {
+    test_init_uart(uart_init_int, uart_irq_handler);
 }
 
 /********************************************************************
@@ -106,8 +145,24 @@ volatile int n_falling;
  *  2. check if it was a falling edge: return 1 if so, 0 otherwise
  */
 int falling_handler(uint32_t pc) {
-    todo("implement this: return 0 if no rising int\n");
+    // todo("implement this: return 0 if no rising int\n");
+    
+    int event = gpio_event_detected(in_pin);
+    if (!event) {
+        return 0;
+    }
+
+
+    if (gpio_read(in_pin) == 0) {
+        n_falling += 1;
+        gpio_event_clear(in_pin);
+
+        return 1;
+    }
+  
+    return 0;
 }
+
 
 // initialize for a falling edge
 void falling_init_fn(void) {
@@ -135,7 +190,18 @@ volatile int n_rising;
  *  2. check if it was a rising edge: return 1 if so, 0 otherwise
  */
 int rising_handler(uint32_t pc) {
-    todo("implement this: return 0 if no rising int\n");
+    int event = gpio_event_detected(in_pin);
+    if (!event) {
+        return 0;
+    }
+  
+    if (gpio_read(in_pin)) {
+        n_rising += 1;
+        gpio_event_clear(in_pin);
+        return 1;
+    }
+  
+    return 0;
 }
 
 static void rising_init_fn(void) {
@@ -146,6 +212,7 @@ static void rising_init_fn(void) {
 void rising_init(void) {
     test_init(rising_init_fn, rising_handler);
 }
+
 
 /********************************************************************
  * rise-falle edges: make sure you can handle composition.  you don't
@@ -172,6 +239,10 @@ void rise_fall_init(void) {
 }
 
 
+
+
+
+
 /********************************************************************
  * timer interrupt: pull the relevant timer interrupt code  from
  * lab 4.
@@ -183,12 +254,23 @@ void rise_fall_init(void) {
  *  2. return 1 if so.
  */
 int timer_test_handler(uint32_t pc) {
+   
     dev_barrier();
 
-    // should look very similar to the timer interrupt handler.
-    todo("implement this by stealing pieces from 4-interrupts/0-timer-int");
+  
+    unsigned pending = GET32(IRQ_basic_pending);
 
-    dev_barrier();
+ 
+    if((pending & ARM_Timer_IRQ) == 0)
+        return 0;
+
+
+    PUT32(ARM_Timer_IRQ_Clear, 1);
+
+   
+    dev_barrier();    
+
+    
     return 1;
 }
 

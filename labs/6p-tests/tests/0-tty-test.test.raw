@@ -1,0 +1,2 @@
+TRACE: out file for <0-tty-test>
+tty=</dev/cu.usbserial-210>: (should be an absolute path)
