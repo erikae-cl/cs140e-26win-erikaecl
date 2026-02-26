@@ -1,5 +1,24 @@
 ## Errata and clarification.
 
+How to write the save/restore assembly:
+ 1. The hard (probably wrong) way is to write all the assembly all
+    at once.  Difficult to get right.
+ 2. The easy way: the tests are such that you can save a few registers
+    print them and panic in the exception handler.  See if they
+    are right, and if so, start adding. 
+ 3. If you don't do this, it's very easy to make a mistake in one,
+    return, and then jump into hyperspace.
+
+Common mistake: not setting the exception stack pointer.
+  - Recall: for simplicity we always set the exception `sp` as the first
+    instruction in the exception handler.  (`4-interrupt` is a good
+    example, but pretty much any of our exception handling `.S` files
+    will do so.)
+  - If you don't do this, the `sp` will often be the reset value of
+    0.  And then grow down into high memory --- unclear what happens since
+    we only have 512MB of memory and this will be near the 4GB range.
+    Might be GPU garbage, not sure.
+
 Clarifications:
   1. Because so many people are still working on the previous
      interleave labs we are defering the thread interleaving discussed
